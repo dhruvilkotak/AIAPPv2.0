@@ -1,0 +1,89 @@
+<ion-header>
+        <ion-navbar>
+          <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+          <ion-title>View Assessment Test</ion-title>
+        </ion-navbar>
+      </ion-header>
+      
+    
+    
+       <ion-content padding="'true'" scroll="false" class="has-header" >
+            <ion-grid style="height: 20%">
+                    <ion-row justify-content-center align-items-center style="height: 100%">
+                            <h3> {{studentObject.firstName}}  {{studentObject.lastName}}  </h3>
+                    </ion-row>
+                  </ion-grid>
+           <ion-card>
+               <!-- <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterItems()"></ion-searchbar> -->
+             
+               <div *ngIf="error" class="error-message">error:{{error}}</div>
+                 
+               <ion-row>
+                  
+                        <ion-col  >
+                            <ion-item >
+                                    Enter Number of Knowns
+                            </ion-item>
+                            </ion-col>
+                      
+                        
+                       <ion-col>
+                              <ion-select  [(ngModel)]="knownsTime" (ngModelChange)="showKnownUnKnownWords()">
+                                    <ion-option *ngFor="let intObj of intArray" value = "{{intObj}}" >{{intObj}}</ion-option>
+   
+                             </ion-select> 
+                       </ion-col>
+                   </ion-row>
+              
+                <ion-item  >
+          
+                <ion-row  > 
+                        <ion-col  >Total Test  </ion-col>
+              
+                   <ion-col> {{assessmentTestObjectArray.length}}</ion-col>
+                   
+                </ion-row>
+                <br>
+                <ion-row>
+                    <ion-col  >Number of Knowns / UnKnowns</ion-col>
+                    <ion-col >{{totalKnowns}}/{{totalUnKnowns}}</ion-col>
+                    
+                </ion-row> 
+                <br>
+                <ion-row justify-content-center align-items-center style="height: 100%">
+                    <button ion-button class="submit-btn" full (click)="saveToKnownUnknown()">add All to known/unknown</button>
+                </ion-row>
+                <br>
+               
+    
+                   <ion-row class="ion-title" style="background-color: silver;">
+                       <ion-col >Words</ion-col>
+                       <ion-col *ngFor="let assessmentwordObject of assessmentTestObjectArray;let i=index ">
+                          <ion-col >Test {{i}}</ion-col>
+                       </ion-col>
+                       <ion-col >Total Knowns</ion-col>
+                       <ion-col></ion-col>
+                       <ion-col></ion-col>
+                     </ion-row>
+                     
+                     <ion-item *ngFor="let assessmentwordObject of assessmentWordDataArray">
+                         <ion-row  >
+                             <ion-col >{{assessmentwordObject.wordData.wordText}}</ion-col>
+                             <ion-col *ngFor="let stringObj of assessmentwordObject.stringKnownArray ">
+                                 <ion-col >{{stringObj}}</ion-col>
+                             </ion-col>
+                             <ion-col >{{assessmentwordObject.totalKnownTime}} </ion-col>
+                             <ion-col *ngIf="!assessmentwordObject.wordAdded" style="color: blue" (click)="addToKnownList(assessmentwordObject.wordData)">Add to Known List</ion-col>
+                             <ion-col *ngIf="!assessmentwordObject.wordAdded" style="color: blue" (click)="addToUnKnownList(assessmentwordObject.wordData)">Add to UnKnown List</ion-col>
+                             <ion-col *ngIf="assessmentwordObject.wordAdded"  style="color: rebeccapurple">{{assessmentwordObject.wordType}}</ion-col>
+                             <ion-col *ngIf="assessmentwordObject.wordAdded" ></ion-col>
+                         
+                         </ion-row>
+                       </ion-item>
+               </ion-item>
+              
+           </ion-card>
+         </ion-content>
+       

@@ -1,0 +1,66 @@
+<ion-header>
+    <ion-navbar>
+      <!-- <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button> -->
+      <ion-title>Session Summaries</ion-title>
+    </ion-navbar>
+    </ion-header>
+    
+ <ion-content padding>
+    <ion-grid style="height: 10%">
+      <ion-row justify-content-center align-items-center style="height: 100%">
+        <h3 > {{studentObject.firstName}} {{studentObject.lastName}} </h3>
+      </ion-row>
+    </ion-grid>
+    </ion-content> 
+
+    <div *ngIf="error" class="error-message">{{error}}</div>
+    <ion-content padding="'true'" scroll="false" class="has-header">
+        <ion-card>
+        
+        <br>
+            
+            <ion-row justify-content-center align-items-center style="height: 100%">
+                <ion-col class="ion-title"  style="font-weight: bold;background-color: silver;">  Method : </ion-col>
+                <ion-col> <h3 > {{methodName}} </h3> </ion-col>
+                        
+            </ion-row>
+<br><br>
+            <ion-item  >
+                <ion-row class="ion-title" style="background-color: silver;">
+                    <ion-col >Session </ion-col>
+                    <ion-col >Date</ion-col>
+                    <ion-col></ion-col>
+                    <ion-col></ion-col>
+                  </ion-row>
+                  <ion-item *ngFor="let sessionObj of sessionArray">
+                      <ion-row  >
+                          <ion-col>
+                              Session {{sessionObj.sessionIndex+1}}
+                          </ion-col>
+                          <ion-col>
+                              {{sessionObj.sessionDate}}
+                          </ion-col>
+                          <ion-col>
+                            <ion-item (click)="sessionSummary(sessionObj)"  style="color: blue">
+                                Session Summaries
+                            </ion-item>
+                          </ion-col>
+                          <ion-col >
+                            <ion-item (click)="preSessionAssessment(sessionObj)"  style="color: blue">
+                                Session Assessment List
+                            </ion-item>
+                          </ion-col>
+                      </ion-row>
+                    </ion-item>
+            </ion-item>
+
+            
+          
+            
+        </ion-card>
+
+        
+      </ion-content>
+       

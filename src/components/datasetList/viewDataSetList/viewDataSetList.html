@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>View DataSets List</ion-title>
+    </ion-navbar>
+    </ion-header>
+    
+    <ion-content padding>
+    <ion-grid style="height: 10%">
+      <ion-row justify-content-center align-items-center style="height: 100%">
+        <h3 > View DataSets : </h3>
+      </ion-row>
+    </ion-grid>
+    
+    
+    <div *ngIf="error" class="error-message">{{error}}</div>
+    <ion-content padding="'true'" scroll="false" class="has-header">
+        <ion-card>
+            <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterItems()"></ion-searchbar>
+  
+            <ion-item  >
+                <ion-row class="ion-title" style="background-color: silver;">
+                    <ion-col >DataSet Name:</ion-col>
+                    <ion-col >Total words</ion-col>
+                    <ion-col ></ion-col>
+                    
+                  </ion-row>
+                  <ion-item *ngFor="let wordObjects of wordDataList">
+                      <ion-row  >
+                          <ion-col (click)="viewWordData(wordObjects)" >{{wordObjects.wordText}}</ion-col>
+                          <ion-col (click)="viewWordData(wordObjects)" >{{wordObjects.wordCategory}}</ion-col>
+                          <ion-col >
+                            <ion-item (click)="removeWord(wordObjects)" style="color: blue">
+                             
+                                Remove Word
+                            </ion-item>
+                          </ion-col>
+                      
+                      </ion-row>
+                    </ion-item>
+            </ion-item>
+          
+        </ion-card>
+      </ion-content>
+    </ion-content>
+    

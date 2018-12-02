@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-navbar>
+      <!-- <ion-title>{{TestTitle}} : {{currentCardNumber}}/{{totalCardNumber}}</ion-title> -->
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+        <ion-grid style="height: 50%;padding-top: 10%;">
+                <ion-row justify-content-center align-items-center style="height: 100%">
+                        <h3 style="font-size: 150px;"> {{wordDataObject.wordText}} </h3>
+                </ion-row>
+              </ion-grid>
+   </ion-content>
+  
+   
+   <ion-content padding>
+    <ion-grid style="padding-top: 40%;">
+            <ion-row justify-content-center align-items-center style="height: 100%">
+              <ion-col class="center-col-item" style="max-width: 30%;">
+                <div class="img-circular-blue" (click)="greenCircleClick()">
+                  <div class="horizontal-line" ></div>
+                </div>
+              </ion-col>
+              <ion-col class="center-col-item" style="max-width: 30%;">
+                <div class="img-circular-blue" (click)="redCircleClick()">
+                  <div class="verticle-line" ></div>
+                </div> 
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+</ion-content>
+  

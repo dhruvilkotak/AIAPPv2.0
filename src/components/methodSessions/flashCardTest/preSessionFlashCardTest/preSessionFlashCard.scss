@@ -1,0 +1,29 @@
+.img-circular-blue{
+    width: 180px;
+    height: 180px;
+   background-size: cover;
+    display: block;
+    border-radius: 50%;
+    background-color: #cccccc;
+    background-image: linear-gradient(blue);
+
+   }
+
+.verticle-line{
+    width: 2px;
+    height: 180px;
+    background: white;
+    margin: 20px auto 0 auto;
+}
+.horizontal-line{
+    top:50%;
+    position: absolute;
+    width: 180px;
+    height: 2px;
+    background: white;
+    margin: 0px auto 0 auto;
+}
+.center-col-item{
+    margin-left: 15%;
+    margin-right: 15%;
+}

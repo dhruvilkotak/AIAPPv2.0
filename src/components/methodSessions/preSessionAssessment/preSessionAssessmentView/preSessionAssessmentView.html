@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Pre-Session View : Session {{sessionCounter+1}}</ion-title>
+    </ion-navbar>
+    </ion-header>
+    
+    <ion-content padding="'true'" scroll="false" class="has-header" >
+        <ion-grid style="height: 20%">
+                <ion-row justify-content-center align-items-center style="height: 100%">
+                        <h3> {{studentObject.firstName}}  {{studentObject.lastName}}  </h3>
+                </ion-row>
+              </ion-grid>
+    
+    <div *ngIf="error" class="error-message">{{error}}</div>
+    <ion-content padding="'true'" scroll="false" class="has-header">
+        <ion-card align-items-center>
+        
+            <ion-item *ngIf="sessionCounter > 0 " align-items-center >
+                <ion-row class="ion-title" style="background-color: silver;">
+                    <ion-col >Words</ion-col>
+                    <ion-col *ngIf="sessionCounter > 1 "> Previous Test Result </ion-col>
+                    <ion-col >current Test result</ion-col>
+                    <ion-col *ngIf="sessionCounter > 1 ">Notes:</ion-col>
+                </ion-row>
+                  
+                  <ion-item *ngFor="let preSessionWordDataObj of preSessionWordDataArray">
+                        <ion-row  >
+                            <ion-col>{{preSessionWordDataObj.wordData.wordText}}</ion-col>
+                            <ion-col *ngIf="sessionCounter > 1 ">{{preSessionWordDataObj.test1Known}}</ion-col>
+                            <ion-col>{{preSessionWordDataObj.test2Known}}</ion-col>
+                            <ion-col *ngIf="sessionCounter > 1 ">{{preSessionWordDataObj.notes}}</ion-col>
+                        </ion-row>
+                    </ion-item>
+            
+            </ion-item>
+
+            <ion-item justify-content-center align-items-center >
+                <ion-row class="col col-center text-center">
+                    <ion-col class="ion-title" style="background-color: silver;" align-items-center col-2>Unknown Words </ion-col>
+                    <ion-col *ngFor="let wordDataObj of remainUnknownWordArray"> 
+                       <ion-col align-items-center> {{wordDataObj.wordText}}</ion-col>
+                    </ion-col>
+                </ion-row>
+                <br>
+                <ion-row *ngIf="methodIndex < 2 " class="col col-center text-center" >
+                    <ion-col class="ion-title" style="background-color: silver;" align-items-center col-2>Known Words </ion-col>
+                    <ion-col *ngFor="let wordDataObj of methodSessionObject.knownWordList"> 
+                       <ion-col align-items-center> {{wordDataObj.wordText}}</ion-col>
+                    </ion-col>
+                </ion-row>
+                 
+            </ion-item>
+
+        </ion-card>
+
+      
+      </ion-content>
+     </ion-content> 

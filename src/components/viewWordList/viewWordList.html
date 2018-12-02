@@ -1,0 +1,67 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>View Words</ion-title>
+    </ion-navbar>
+    </ion-header>
+    
+    <ion-content padding>
+    <ion-grid style="height: 10%">
+      <ion-row justify-content-center align-items-center style="height: 100%">
+        <h3 > View Words : </h3>
+      </ion-row>
+    </ion-grid>
+    
+    
+    <div *ngIf="error" class="error-message">{{error}}</div>
+    <ion-content padding="'true'" scroll="false" class="has-header">
+        <ion-card>
+            <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterItems()"></ion-searchbar>
+  
+            <ion-grid style="height: 100%">
+              <ion-row justify-content-center align-items-center style="height: 100%">
+                      <button ion-button class="submit-btn" full type="submit" (click)="exportWordsFile()">Export Words</button>
+                </ion-row>
+            </ion-grid>
+
+            <ion-grid style="height: 100%">
+                <ion-row justify-content-center align-items-center style="height: 100%">
+                        <button ion-button class="submit-btn" full type="submit" (click)="importWordsFile()">Import Words</button>
+                  </ion-row>
+              </ion-grid>
+  
+              <!-- <ion-grid style="height: 100%">
+                <ion-row justify-content-center align-items-center style="height: 100%">
+                        <button ion-button class="submit-btn" full type="submit" (click)="removeAllWords()">Remove All Words</button>
+                  </ion-row>
+              </ion-grid>
+   -->
+
+            <ion-item  >
+                <ion-row class="ion-title" style="background-color: silver;">
+                    <ion-col >Word</ion-col>
+                    <ion-col >Word Category</ion-col>
+                    <ion-col ></ion-col>
+                    
+                  </ion-row>
+                  <ion-item *ngFor="let wordObjects of wordDataList">
+                      <ion-row  >
+                          <ion-col (click)="viewWordData(wordObjects)" >{{wordObjects.wordText}}</ion-col>
+                          <ion-col (click)="viewWordData(wordObjects)" >{{wordObjects.wordCategory}}</ion-col>
+                          <ion-col >
+                            <ion-item (click)="removeWord(wordObjects)" style="color: blue">
+                             
+                                Remove Word
+                            </ion-item>
+                          </ion-col>
+                      
+                      </ion-row>
+                    </ion-item>
+            </ion-item>
+          
+        </ion-card>
+      </ion-content>
+    </ion-content>
+    

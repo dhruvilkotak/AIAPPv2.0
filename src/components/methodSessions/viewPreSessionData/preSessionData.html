@@ -1,0 +1,74 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Session Details</ion-title>
+    </ion-navbar>
+    </ion-header>
+    
+    <ion-content padding="'true'" scroll="false" class="has-header" >
+        <ion-grid style="height: 20%">
+                <ion-row justify-content-center align-items-center style="height: 100%">
+                        <h3> {{studentObject.firstName}}  {{studentObject.lastName}}  </h3>
+                </ion-row>
+              </ion-grid>
+
+   
+    
+    <div *ngIf="error" class="error-message">{{error}}</div>
+    <ion-content padding="'true'" scroll="false" class="has-header" >
+        <ion-card>
+        
+            <ion-item  >
+                <ion-row  >
+                    <ion-col class="ion-title"  style="font-weight: bold;">Data Set : </ion-col>
+                    <ion-col >{{studentObject.dataset}}</ion-col>
+                  </ion-row>
+            </ion-item>
+            <ion-item  >
+                <ion-row >
+                    <ion-col class="ion-title"  style="font-weight: bold;">Method : </ion-col>
+                    <ion-col >{{methodName}}</ion-col>
+                  </ion-row>
+            </ion-item>
+            <ion-item  >
+                <ion-row  >
+                    <ion-col class="ion-title"  style="font-weight: bold;">Pre Assessment Test : </ion-col>
+                    <ion-col >{{studentObject.assessmentDataArrayObject.length}} / {{studentObject.totalAssessment}} </ion-col>
+                  </ion-row>
+            </ion-item>
+            <ion-item  >
+                <ion-row >
+                    <ion-col class="ion-title"  style="font-weight: bold;">Intervention Sessions Completed: </ion-col>
+                    <ion-col >{{totalSessions}}</ion-col>
+                  </ion-row>
+            </ion-item>
+                    <ion-item justify-content-center align-items-center >
+                <ion-row class="col col-center text-center">
+                    <ion-col class="ion-title" style="background-color: silver;" align-items-center col-2>Unknown Words </ion-col>
+                    <ion-col *ngFor="let wordDataObj of previousUnknownArray"> 
+                       <ion-col align-items-center> {{wordDataObj.wordText}}</ion-col>
+                    </ion-col>
+                </ion-row>
+            </ion-item>
+        </ion-card>
+
+        <div class="ion-content" *ngIf="!beginAssessmentDone "  style=" padding-top: 5%">
+            <ion-grid style="height: 100%">
+              <ion-row justify-content-center align-items-center style="height: 100%">
+                      <button ion-button class="submit-btn" full (click)="startNextSession()">Begin Next Session</button>
+                </ion-row>
+
+                <ion-row justify-content-center align-items-center style="height: 100%">
+                    <ion-col>
+                        <button ion-button class="submit-btn" full (click)="sessionSummaries()">Session Summaries</button>
+                    </ion-col>
+                    <ion-col>
+                        <button ion-button class="submit-btn" full (click)="viewGraphData()">Graph Data</button>
+                    </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+      </ion-content>
+</ion-content>

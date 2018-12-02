@@ -1,0 +1,66 @@
+<ion-header>
+<ion-navbar>
+  <button ion-button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>Add Student</ion-title>
+</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<ion-grid style="height: 10%">
+  <ion-row justify-content-center align-items-center style="height: 100%">
+    <h3 > Add Student Details : </h3>
+  </ion-row>
+</ion-grid>
+
+
+<div *ngIf="error" class="error-message">{{error}}</div>
+<ion-content padding="'true'" scroll="false" class="has-header">
+    <ion-card>
+      <form class="list" #newStudentForm="ngForm" (ngSubmit)="addNewStudent()">
+          <ion-row>
+              <ion-col>
+                <ion-list inset>
+          
+              <ion-item>
+                <ion-label >First Name : </ion-label>
+                <ion-input name="firstname" required [(ngModel)]="firstname" type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                  <ion-label >Last Name : </ion-label>
+                  <ion-input  name="lastname" required [(ngModel)]="lastname" type="text"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label >Student Id : </ion-label>
+                    <ion-input  name="studentid" required [(ngModel)]="studentid" type="text"></ion-input>
+                  </ion-item>
+                  <!-- <ion-item>
+                      <ion-label >Data Set : </ion-label> 
+                      <ion-select  name="dataset" required [(ngModel)]="dataset">
+                          <ion-option value="dataset1" selected>dataset1</ion-option>
+                        </ion-select>
+                    </ion-item> -->
+
+                    <!-- <ion-item>
+                        <ion-label >Method : </ion-label>
+                        <ion-select  name="mehod" required [(ngModel)]="method"  >
+                            <ion-option value="incrementalRehearsal" selected>Incremental Rehearsal</ion-option>
+                            <ion-option value="directInstruction">Direct Instruction</ion-option>
+                            <ion-option value="traditionalDrillAndPractice">Traditional Drill And Practice</ion-option>
+                          </ion-select>
+                      </ion-item> -->
+
+                        <ion-grid style="height: 100%">
+                            <ion-row justify-content-center align-items-center style="height: 100%">
+                                    <button ion-button class="submit-btn" full type="submit" [disabled]="!newStudentForm.form.valid">Add Student
+                                      </button>
+                              </ion-row>
+                          </ion-grid>
+              </ion-list>
+          </ion-col>
+          </ion-row>
+        </form>
+    </ion-card>
+  </ion-content>
+</ion-content>

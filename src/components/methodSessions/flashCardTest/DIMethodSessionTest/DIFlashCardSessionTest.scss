@@ -1,0 +1,24 @@
+.img-circular-red{
+    width: 180px;
+    height: 180px;
+   background-size: cover;
+    display: block;
+    border-radius: 50%;
+    background-color: #cccccc;
+    background-image: linear-gradient(red);
+
+   }
+.img-circular-green{
+    width: 180px;
+    height: 180px;
+   background-size: cover;
+    display: block;
+    border-radius: 50%;
+    background-color: #cccccc;
+    background-image: linear-gradient(green);
+
+   }
+.center-col-item{
+    margin-left: 15%;
+    margin-right: 15%;
+}

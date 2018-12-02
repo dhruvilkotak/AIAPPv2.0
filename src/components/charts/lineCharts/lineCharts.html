@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Line Charts</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <h3> line Charts</h3>
+  
+  
+    <ion-content has-header="true" padding="true"  ng-controller="AppCtrl as ctrl" >
+        <!-- <ion-card> -->
+            <div style="width: 70%;" *ngIf="chartData.length > 0"> 
+                <canvas
+                    baseChart
+                    [chartType]="'line'"
+                    [datasets]="chartData"
+                    [labels]="chartLabels"
+                    [options]="chartOptions"
+                    [colors]="myColors"
+                    [legend]="true"
+                    (chartClick)="onChartClick($event)">
+                </canvas>
+            </div>
+            
+        <!-- </ion-card>     -->
+    </ion-content>
+  </ion-content>
+  
