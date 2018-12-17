@@ -6,6 +6,7 @@ import { Platform } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { DocumentPicker } from '@ionic-native/document-picker';
 import { findReadVarNames } from '@angular/compiler/src/output/output_ast';
+import { StudentFireBaseDao } from '../dao/StudentFireBaseDao';
 
 export class StudentServices {
    
@@ -59,7 +60,7 @@ export class StudentServices {
         });
         return  exist;
       }
-
+    
     addStudenttoFile(file:File,studentObj:Student ,studentServiceObject:StudentServices):Promise<any>
     {
         return new Promise(function(resolve,reject ) {
@@ -144,6 +145,8 @@ export class StudentServices {
     {
 
         return new Promise(function(resolve,reject ) {
+            
+                      
             file.writeFile(file.dataDirectory,'studentDetails',JSON.stringify({ studentDetailsArray: studentDetailsArray }),{replace: true}).then(_=>{
                 console.log("file write succ");
                 console.log("size:"+studentDetailsArray.length);
@@ -161,8 +164,8 @@ export class StudentServices {
         var remove:boolean=false;
         const index: number = studentDetailsArray.indexOf(studentObj);
         if (index !== -1) {
-            console.log("index:"+index);
             studentDetailsArray.splice(index, 1);
+            console.log("index:"+index+"  length:+"+studentDetailsArray.length);
             remove=true;
         } 
         return remove;

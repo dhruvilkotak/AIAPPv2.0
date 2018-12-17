@@ -1,10 +1,40 @@
 
 import { File } from "@ionic-native/File";
 import { Dataset } from "../models/Dataset";
+import { WordData } from "../models/wordData";
 export class DataSetService{
   
     wordDetailsFilename:String ='dataSetDetails';
     file:File=new File();
+
+    addDataSetListToFile(file:File):Promise<any>
+    {
+        return new Promise(function(resolve, reject) {
+            var fileData:any;
+            var dataSetDetails: Array<Dataset> = [];
+            var error="";
+            file.checkFile(file.dataDirectory, 'dataSetDetails').then(_ =>{
+                console.log("file does  exist");
+              
+                file.readAsText(file.dataDirectory,'dataSetDetails').then(data=>{
+                  console.log("read succ");
+                  fileData=JSON.parse(data);
+                  dataSetDetails=fileData.dataSetDetails;
+                  resolve(dataSetDetails);
+                  }).catch(err=>{
+                    console.log("read unsecc Dataset array:"+dataSetDetails.length);
+                    reject(dataSetDetails)
+                
+                  });
+        
+                }).catch(err=>{
+                    console.log("file not exist Dataset array:"+dataSetDetails.length);
+                    reject(dataSetDetails)
+                });
+                
+        });
+    }
+
     getDataSetList(file:File):Promise<any>
     {
         
@@ -120,6 +150,55 @@ export class DataSetService{
     }
 
 
+    addWordDatatoDatSetFile(file:File,wordDataObj:WordData,dataServiceObject:DataSetService):Promise<any>
+    {
+        return new Promise(function(resolve,reject ) {
+            var fileData:any;
+            var dataSetDetails: Array<Dataset> =[];
+            var error:string ;
+            dataServiceObject.getDataSetList(file).then(dataSetDetails=>{
+                console.log("Dataset lencheck:"+dataSetDetails.length);
+              
+                var wordArray:Array<WordData>=[];
+                wordArray.push(wordDataObj);
+                dataServiceObject.addWordsToDataSet(wordArray,dataSetDetails);
+                
+                        file.writeFile(file.dataDirectory,'dataSetDetails',JSON.stringify({ dataSetDetails: dataSetDetails }),{replace: true}).then(_=>{
+                            console.log("write succ");
+                            error=" Dataset added with id:"+wordDataObj.wordId;
+                            resolve(error)
+                              }).catch(err=>{
+                                console.log("write unsucc");
+                                reject("write unsucc");
+                              });
+                
+            }).catch(err=>{
+                console.log("Dataset get not workign "+dataSetDetails.length);
+                file.createFile(file.dataDirectory,'dataSetDetails',true).then( fileEntry=>{
+                    console.log("file create");
+                    
+                    var wordArray:Array<WordData>=[];
+                    wordArray.push(wordDataObj);
+                    dataServiceObject.addWordsToDataSet(wordArray,dataSetDetails);
+                    
+                            file.writeFile(file.dataDirectory,'dataSetDetails',JSON.stringify({ dataSetDetails: dataSetDetails }),{replace: true}).then(_=>{
+                                console.log("write succ");
+                                error=" Dataset added with id:"+wordDataObj.wordId;
+                                resolve(error)
+                                  }).catch(err=>{
+                                    console.log("write unsucc");
+                                    reject("write unsucc");
+                                  });
+                    
+                });
+                   
+            });
+        });
+               
+    }
+
+
+
     removeDataSetFromFile(file:File,dataSetDetails: Array<Dataset>):Promise<any>
     {
 
@@ -160,5 +239,29 @@ export class DataSetService{
             }
         }
         return remove;
+    }
+
+    addWordsToDataSet(wordDataList:Array<WordData> , datasetList:Array<Dataset> )
+    {
+        for(let wordObj of wordDataList)
+        {
+            var added:boolean = false;
+            for(let datasetObj of datasetList)
+            {
+                if(wordObj.wordCategory == datasetObj.datasetName)
+                {
+                    datasetObj.wordList.push(wordObj);
+                    added=true;
+                    break;
+                }
+            }
+            if(!added)
+            {
+                var newDatasetObj:Dataset = new Dataset(); 
+                newDatasetObj.datasetName=wordObj.wordCategory;
+                newDatasetObj.wordList.push(wordObj);
+
+            }
+        }
     }
 }

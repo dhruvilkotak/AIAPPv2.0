@@ -8,6 +8,7 @@ import { Storage} from '@ionic/storage';
 import { Platform } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { DocumentPicker } from '@ionic-native/document-picker';
+import { StudentFireBaseService } from '../../services/studentFireBaseService';
 
 @Component({
     selector: 'page-viewStudent',
@@ -19,6 +20,7 @@ export class ViewStudent{
     private studentDetailsArray:Array<Student>=[];
     private allData : Array<Student>=[];
     private  studentServicesObject : StudentServices = new StudentServices();
+    private studentFirebaseService:StudentFireBaseService=new StudentFireBaseService();
     private searchTerm: string = '';
     private error:string='';
 
@@ -30,12 +32,11 @@ export class ViewStudent{
       private socialSharing:SocialSharing,
       private docPicker: DocumentPicker) {
       storage.set('studentObject', null);
-        //   storage.clear();
         console.log("studnet : null"+storage.get('studentObject') == null);
-        this.studentServicesObject.getStudentList(file).then(data=>{
-            this.studentDetailsArray=data;
-            this.allData=data;
-        } ).catch(err=>console.log("erer:"+err));
+        this.studentFirebaseService.getStudentList().then(data=>{
+          this.studentDetailsArray=data;
+          this.allData=data;
+        });
     };
 
     filterItems(){
@@ -55,13 +56,12 @@ export class ViewStudent{
     public ionViewWillEnter() {
       console.log("studentObject  ion views"+this.storage.get('studentObject') == null );
       this.storage.set('studentObject',null);
-
-      this.studentServicesObject.getStudentList(this.file).then(data=>{
+      this.studentFirebaseService.getStudentList().then(data=>{
+        console.log("ion");
         this.studentDetailsArray=data;
         this.allData=data;
-    } ).catch(err=>console.log("erer:"+err));
-
-    //this.storage.clear();
+      });
+    this.storage.clear();
     }
     removeStudent(studentObj:Student)
     {
@@ -91,12 +91,15 @@ export class ViewStudent{
             {
               text: 'yes',
               handler: () => {
+                var studentFireBaseService:StudentFireBaseService=new StudentFireBaseService();
+                studentFireBaseService.removeStudent(studentObj);
                 this.studentServicesObject.removeStudentFromArray(this.allData,studentObj);
-                this.studentServicesObject.removeStudentFromArray(this.studentDetailsArray,studentObj);
-                this.studentServicesObject.removeStudentFromFile(this.file,this.allData).then(removeData=>{
-                this.error=removeData;
+                
+                this.filterItems();   
+                // this.studentServicesObject.removeStudentFromFile(this.file,this.allData).then(removeData=>{
+                // this.error=removeData;
                     
-                }).catch(err=>console.log("e:"+err));
+                // }).catch(err=>console.log("e:"+err));
                 console.log('yes clicked');
               }
             }
@@ -112,16 +115,12 @@ export class ViewStudent{
 
       importStudentFile()
       {
-        this.studentServicesObject.importStudentFile(this.file,this.plt,this.docPicker,this.studentServicesObject,this.allData).then(dataArray=>{
+        //this.studenrFirebaseService.
+        this.studentFirebaseService.importStudentFile(this.file,this.plt,this.docPicker,this.allData).then(dataArray=>{
           console.log("msg:"+dataArray.length);
-          this.allData=dataArray;
-          this.filterItems();
-         
-            
+          this.filterItems();   
         }).catch(err=>{
-
             console.log("error:"+err);
         });
-      
       }
 }

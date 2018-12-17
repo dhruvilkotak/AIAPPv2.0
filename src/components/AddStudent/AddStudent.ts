@@ -7,6 +7,7 @@ import { StudentdashBoard } from '../studentDashBoard/studentDashBoard';
 import { ViewStudent } from '../viewStudent/viewStudent';
 import { Storage} from '@ionic/storage';
 import { HomePage } from '../home/home';
+import { StudentFireBaseService } from '../../services/studentFireBaseService';
 
 @Component({
   selector: 'page-addStudent',
@@ -19,11 +20,11 @@ export class AddStudent {
   private firstname:string;
   private lastname:string;
   private studentid:string;
-  private dataset:string;
   private fileData:any;
   private error: string;
   private studentDetails:Student;
-  private  studentServicesObject : StudentServices = new StudentServices();
+  private  studentFireBaseServicesObject : StudentFireBaseService = new StudentFireBaseService();
+  
   constructor(public navCtrl: NavController,
     private file:File,
     private navParams:NavParams,
@@ -32,30 +33,29 @@ export class AddStudent {
   }
   addNewStudent()
   {
-    this.studentDetails= new Student();
-    this.studentDetails.firstName=this.firstname;
-    this.studentDetails.lastName=this.lastname;
-    this.studentDetails.studentId=this.studentid;
-    this.studentDetails.dataset=this.dataset;
-    
-  
-    this.studentServicesObject.addStudenttoFile(this.file,this.studentDetails,this.studentServicesObject).then(data=>{
-      this.error=data;
+    try {
+      this.studentDetails= new Student();
+      this.studentDetails.firstName=this.firstname;
+      this.studentDetails.lastName=this.lastname;
+      this.studentDetails.studentId=this.studentid;
+      this.studentFireBaseServicesObject.addStudentToFireBase(this.studentDetails);
       this.firstname="";
       this.lastname="";
       this.studentid="";
-      this.dataset="";
       this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentDetails }) );
-      
+    
       this.navCtrl.setRoot(HomePage).then(()=>{
         this.navCtrl.push(StudentdashBoard);
+      }).catch(err=>{
+        this.error=err;
       });
-    
-     console.log("id:"+this.studentDetails.studentId);
-
-
+     
     }
-    ).catch();
+    catch(e) {
+      this.error=""+e;
+      console.log(e);
+    }
+   
   }
 
 }

@@ -5,12 +5,12 @@ import { Method } from './methodIntervetion';
 import { ViewAssessmentWordObjects } from './viewAssessmentWordObjects';
 export class Student {
     firstName: string;
+    studentUID:string;
     lastName: string;
     studentId:string;
-    dataset:string;
     totalAssessment:number=3;
     assessmentDataArrayObject:Array<AssessmentTestData>=[new AssessmentTestData(0),new AssessmentTestData(1),new AssessmentTestData(2)];
-    methodArray:Array<Method> = [];//store 3 methods
+    methodArray:Array<Method> = [new Method("Incremental Rehearsal",0),new Method("Direct Instruction",1),new Method("Traditional Drill & Practice",2)];//store 3 methods
     knwonArrayList:Array<WordData>=[];// known array 
     unKnownArrayList:Array<WordData>=[];// unknown 
     knownUnknownArrayList:Array<WordData>=[];// unknown becomes known

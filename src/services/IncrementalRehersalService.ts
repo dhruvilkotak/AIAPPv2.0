@@ -196,11 +196,6 @@ export class IncrementalRehersalService
                 console.log(wordDatauk2Obj.wordText+" :null  "+this.myMapServiceObject.getValue(uk2Map, wordDatauk2Obj)+" keeping in unknown list");
             }
         }
-        // for(let wordDatatruekwy of truekwy)
-        // {
-        //     this.myMapServiceObject.removeObject(uk1Map, wordDatatruekwy);
-        //     this.myMapServiceObject.removeObject(uk2Map, wordDatatruekwy);
-        // }
         console.log(" tempukk:"+tempUkList.length+"  presession:"+preSessionWordDataArray.length);        
         return preSessionWordDataArray;
     }

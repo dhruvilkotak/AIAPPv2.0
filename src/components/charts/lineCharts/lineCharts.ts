@@ -27,7 +27,7 @@ export class LineChart{
     private test1Map:MyMap;
     private test2Map:MyMap;
     private incrementalRehrsalService:IncrementalRehersalService= new IncrementalRehersalService();
-    p
+    
 
     private chartData = [];
       chartOptions = {

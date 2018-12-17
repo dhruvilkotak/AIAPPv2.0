@@ -26,25 +26,22 @@ export class AddWordList{
          this.fromModal=params.get('fromModal');
     }
     addNewWord(){
-        this.wordData = new WordData();
-        console.log("word:"+this.wordText+"  cat:"+this.wordCategory);
-        this.wordData.wordText=this.wordText;
-        this.wordData.wordCategory= this.wordCategory;
-        
-        if(!this.fromModal)
-        {
-
-           this.wordServiceObject.addWordtoFile(this.file,this.wordData,this.wordServiceObject).then(data=>{
-           
-            this.fireBaseWordServiceObject.addWordData(this.wordData);
-           
-                this.error=data;
+        try{
+            this.wordData = new WordData();
+            console.log("word:"+this.wordText+"  cat:"+this.wordCategory);
+            this.wordData.wordText=this.wordText;
+            this.wordData.wordCategory= this.wordCategory;
+            if(!this.fromModal)
+            {
+                this.fireBaseWordServiceObject.addWordData(this.wordData);
                 this.wordText="";
                 this.wordCategory="";
-              }).catch();
-        }
-        else{
-            this.dismiss(this.wordData);
+            }
+            else{
+                this.dismiss(this.wordData);
+            }
+        }catch(e){
+            this.error=e;
         }
         
     }
