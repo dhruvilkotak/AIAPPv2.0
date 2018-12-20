@@ -7,6 +7,7 @@ import { SocialSharing } from "@ionic-native/social-sharing";
 import { StudentServices } from "../services/studentAddRemoveServices";
 import { DocumentPicker } from "@ionic-native/document-picker";
 import { File } from "@ionic-native/file";
+import { Storage } from "@ionic/storage";
 @Injectable()
 export class StudentFireBaseDao{
     
@@ -38,7 +39,7 @@ export class StudentFireBaseDao{
         });
     }
 
-    addStudent(studentObject:Student){
+    addStudent(studentObject:Student,storage:Storage){
         
         let databaseRef = firebase.database().ref('StudentDataList/');
         var query=databaseRef.orderByChild('studentId').equalTo(""+studentObject.studentId);
@@ -53,6 +54,8 @@ export class StudentFireBaseDao{
                 let newInfo = databaseRef.push();
                 studentObject.studentUID=newInfo.key;
                 newInfo.set(studentObject);
+                
+                this.storage.set('studentObject',JSON.stringify({ studentObject: studentObject }) );
             }
             query.off();
             return;
@@ -155,11 +158,14 @@ export class StudentFireBaseDao{
       
       updateKnownList(studentObject:Student)
       {
+        console.log("student known:"+studentObject.studentUID);
+          console.log("knownlen:"+studentObject.knownUnknownArrayList);
         let databaseRef = firebase.database().ref('StudentDataList/'+studentObject.studentUID+'/knwonArrayList/');
         databaseRef.update(studentObject.knwonArrayList);
       }
       updateUnKnownList(studentObject:Student)
       {
+        console.log("student unknown:"+studentObject.studentUID);
         let databaseRef = firebase.database().ref('StudentDataList/'+studentObject.studentUID+'/unKnownArrayList/');
         databaseRef.update(studentObject.unKnownArrayList);
       }

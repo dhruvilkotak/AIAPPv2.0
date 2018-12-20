@@ -17,7 +17,7 @@ import { ViewStudentAllWords } from './ViewStudentAllWords/viewStudentAllWords';
 })
 export class StudentdashBoard {
 
-    private studentObject: Student=new Student();
+    private studentObject: Student = new Student();
     private beginAssessmentDone:boolean ;
     private methodObjectArray:Array<Method>=[];
     private PreInterventionAssessmentResults:boolean;
@@ -95,6 +95,7 @@ export class StudentdashBoard {
   }
 
   viewAssessment(){
+    console.log("student dashvboasd:"+this.studentObject.studentUID);
     this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
     this.navCtrl.push(ViewAssessmentTest);
   }

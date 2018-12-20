@@ -53,7 +53,7 @@
                 </ion-row> 
                 <br>
                 <ion-row justify-content-center align-items-center style="height: 100%">
-                    <button ion-button class="submit-btn" full (click)="saveToKnownUnknown()">add All to known/unknown</button>
+                    <button ion-button class="submit-btn" full (click)="saveToKnownUnknown()" [disabled]="!isenabled">add All to known/unknown</button>
                 </ion-row>
                 <br>
                

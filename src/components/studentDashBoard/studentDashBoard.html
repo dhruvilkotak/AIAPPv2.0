@@ -48,7 +48,10 @@
                   <ion-item *ngFor="let methodObject of methodObjectArray"  style="text-align: center;">
                       <ion-row  >
                           <ion-col style="color: blue" (click)="startInterventionTest(methodObject.methodIndex)" >{{methodObject.methodName}}</ion-col>
-                          <ion-col >{{methodObject.sessionsArray.length}}/{{methodObject.totalSessions}}</ion-col>
+
+                          <ion-col *ngIf="methodObject.sessionsArray">{{methodObject.sessionsArray.length}}</ion-col>
+                          <ion-col *ngIf="!methodObject.sessionsArray">0</ion-col>
+                          
                       
                       </ion-row>
                     </ion-item>

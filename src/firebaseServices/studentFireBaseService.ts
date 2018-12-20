@@ -4,14 +4,15 @@ import { StudentServices } from "../services/studentAddRemoveServices";
 import { DocumentPicker } from "@ionic-native/document-picker";
 import { Platform } from "ionic-angular";
 import { File } from "@ionic-native/file";
+import { Storage } from "@ionic/storage";
 
 export class StudentFireBaseService{
     private studentFireBaseDao:StudentFireBaseDao=new StudentFireBaseDao();
       
-    addStudentToFireBase(studentObject:Student)
+    addStudentToFireBase(studentObject:Student,storage:Storage)
     {
         
-        this.studentFireBaseDao.addStudent(studentObject);
+        this.studentFireBaseDao.addStudent(studentObject,storage);
     }
 
     removeStudent(studentObject:Student)

@@ -17,6 +17,7 @@ import { StudentFireBaseService } from '../../../firebaseServices/studentFireBas
   })
 export class ViewAssessmentTest
 {
+    private isenabled:boolean = true;
     private knownsTime:number=0;
     private totalKnowns:number=0;
     private totalUnKnowns:number=0;
@@ -40,6 +41,7 @@ export class ViewAssessmentTest
         this.storage.get('studentObject').then((val) => {
             var fileData:any = JSON.parse(val);
             this.studentObject = fileData.studentObject;
+            console.log("student view1:"+this.studentObject.studentUID);
             console.log("converted:"+this.studentObject.convertToAssessmentWord);
             if(this.studentObject.convertToAssessmentWord==false)
             {
@@ -66,15 +68,16 @@ export class ViewAssessmentTest
             console.log("length:"+this.assessmentTestObjectArray.length+" "+this.intArray);
 
               this.showKnownUnKnownWords();
+
             if(this.assessmentWordDataArray.length==0)
             {
                 this.studentObject.PreInterventionAssessmentResults=true;
                 this.goBackToView(this.studentObject);
-   
+               
                 this.error="No data Available";
                 console.log(this.error);
             }
-           
+            this.chekEnableDisable();
         });      
    }
 
@@ -187,10 +190,13 @@ export class ViewAssessmentTest
 
     saveToKnownUnknown()
     {
+        var anyChanges:boolean =false;
+        console.log("student view2:"+this.studentObject.studentUID);
         for(let obj of this.studentObject.assessmentWordDataArray)
         {
             if(!obj.wordAdded)
             {
+                anyChanges=true;
                 //loginc
                 if(obj.totalKnownTime>=this.knownsTime)
                 {
@@ -214,15 +220,37 @@ export class ViewAssessmentTest
         }
         this.assessmentWordDataArray=this.studentObject.assessmentWordDataArray;
         //this.assessmentWordDataArray=[];
-        this.viewAssessmentFireBaseService.updateAssessmentWordDataArray(this.studentObject);
-        this.studentFireBaseService.updateKnownList(this.studentObject);
-        this.studentFireBaseService.updateUnKnownList(this.studentObject);
-        this.goBackToView(this.studentObject);
-    
+        if(anyChanges)
+        {
+            
+            this.viewAssessmentFireBaseService.updateAssessmentWordDataArray(this.studentObject);
+            if(this.studentObject.knwonArrayList!=null)
+            this.studentFireBaseService.updateKnownList(this.studentObject);
+            if(this.studentObject.unKnownArrayList!=null)
+            this.studentFireBaseService.updateUnKnownList(this.studentObject);
+            this.goBackToView(this.studentObject);
+        }    
     }
 
+    chekEnableDisable()
+    {
+        var counter:number=0;
+        for(let assessmentwordObject of this.assessmentWordDataArray)
+        {
+            if(assessmentwordObject.wordAdded)
+            {
+                counter++;
+            }
+        }
+        if(counter == this.assessmentWordDataArray.length)
+        {
+            this.isenabled=false;
+        }
+ 
+    }
     goBackToView(studentObject:Student)
     {
+        this.chekEnableDisable();
         if(Student!=null)
         {
             console.log("studentName:"+this.studentObject.firstName+" "+this.studentObject.lastName);

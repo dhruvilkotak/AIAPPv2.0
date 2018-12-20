@@ -38,11 +38,12 @@ export class AddStudent {
       this.studentDetails.firstName=this.firstname;
       this.studentDetails.lastName=this.lastname;
       this.studentDetails.studentId=this.studentid;
-      this.studentFireBaseServicesObject.addStudentToFireBase(this.studentDetails);
+    
+      this.studentFireBaseServicesObject.addStudentToFireBase(this.studentDetails,this.storage);
       this.firstname="";
       this.lastname="";
       this.studentid="";
-      this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentDetails }) );
+      //this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentDetails }) );
     
       this.navCtrl.setRoot(HomePage).then(()=>{
         this.navCtrl.push(StudentdashBoard);
