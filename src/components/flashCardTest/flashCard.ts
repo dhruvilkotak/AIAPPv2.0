@@ -7,6 +7,7 @@ import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { StudentServices } from '../../services/studentAddRemoveServices';
 import { Storage } from '@ionic/storage';
 import { ArrayService } from '../../services/arrayService';
+import { PreAssessmentFireBaseService } from '../../firebaseServices/PreAssessmentFireBaseService';
 @Component({
   selector: 'page-flashCard',
   templateUrl: 'flashCard.html'
@@ -86,9 +87,16 @@ export class FlashCard{
       this.studentObject.assessmentDataArrayObject[this.testIndex].testStatus=true;
       if(this.testIndex>0)
       {
+        var known2Len = 0;
+        var known1Len= 0;
+        if(this.studentObject.assessmentDataArrayObject[this.testIndex].knownWordList!=null)
+        known2Len= this.studentObject.assessmentDataArrayObject[this.testIndex].knownWordList.length;
+        
+        if(this.studentObject.assessmentDataArrayObject[this.testIndex-1].knownWordList!=null)
+        known1Len = this.studentObject.assessmentDataArrayObject[this.testIndex-1].knownWordList.length;
+        
         this.studentObject.assessmentDataArrayObject[this.testIndex].consistancyPercentage= 
-                    this.studentObject.assessmentDataArrayObject[this.testIndex].knownWordList.length - 
-                    this.studentObject.assessmentDataArrayObject[this.testIndex-1].knownWordList.length;
+                    known2Len - known1Len;
       }
       this.goBackToView(this.studentObject);
     }
@@ -105,9 +113,16 @@ export class FlashCard{
       this.studentObject.assessmentDataArrayObject[this.testIndex].testStatus=true;
       if(this.testIndex>0)
       {
+        var known2Len = 0;
+        var known1Len= 0;
+        if(this.studentObject.assessmentDataArrayObject[this.testIndex].knownWordList!=null)
+        known2Len= this.studentObject.assessmentDataArrayObject[this.testIndex].knownWordList.length;
+        
+        if(this.studentObject.assessmentDataArrayObject[this.testIndex-1].knownWordList!=null)
+        known1Len = this.studentObject.assessmentDataArrayObject[this.testIndex-1].knownWordList.length;
+        
         this.studentObject.assessmentDataArrayObject[this.testIndex].consistancyPercentage= 
-                    this.studentObject.assessmentDataArrayObject[this.testIndex].knownWordList.length - 
-                    this.studentObject.assessmentDataArrayObject[this.testIndex-1].knownWordList.length;
+                    known2Len - known1Len;
       }
       this.goBackToView(this.studentObject);
     }
@@ -116,9 +131,11 @@ export class FlashCard{
   {
     if(Student!=null)
     {
-      console.log("studentName:"+this.studentObject.firstName+" "+this.studentObject.lastName);
+      console.log("studentName:"+this.studentObject.firstName+" "+this.studentObject.lastName+" ass len:"+this.studentObject.assessmentDataArrayObject.length);
    //   this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject);
       this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
+      var preAssessmentFireBaseService:PreAssessmentFireBaseService= new PreAssessmentFireBaseService();
+      preAssessmentFireBaseService.addAssessmentToStudent(studentObject,this.testIndex);
     } 
      this.navCtrl.pop();
   }

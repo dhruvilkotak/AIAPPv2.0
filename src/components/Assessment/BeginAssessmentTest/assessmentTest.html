@@ -37,8 +37,11 @@
                          <ion-col style="color: blue" (click)="startAssessmentTest(assessmentTestObject.testIndex)" >Test {{assessmentTestObject.testIndex+1}}</ion-col>
                          <ion-col >{{assessmentTestObject.testStatus}}</ion-col>
                          <ion-col >{{assessmentTestObject.totalWordList}} </ion-col>
-                         <ion-col >{{assessmentTestObject.knownWordList.length}} </ion-col>
-                         <ion-col >{{assessmentTestObject.unknownWordList.length}} </ion-col>
+
+                         <ion-col *ngIf="assessmentTestObject.knownWordList">{{assessmentTestObject.knownWordList.length}} </ion-col>
+                         <ion-col *ngIf="!assessmentTestObject.knownWordList">0</ion-col>
+                         <ion-col *ngIf="assessmentTestObject.unknownWordList">{{assessmentTestObject.unknownWordList.length}} </ion-col>
+                         <ion-col *ngIf="!assessmentTestObject.unknownWordList"> 0 </ion-col>
                          <ion-col >{{assessmentTestObject.consistancyPercentage}} </ion-col>
                      
                      </ion-row>

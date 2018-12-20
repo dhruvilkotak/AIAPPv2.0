@@ -7,7 +7,7 @@ import { StudentdashBoard } from '../studentDashBoard/studentDashBoard';
 import { ViewStudent } from '../viewStudent/viewStudent';
 import { Storage} from '@ionic/storage';
 import { HomePage } from '../home/home';
-import { StudentFireBaseService } from '../../services/studentFireBaseService';
+import { StudentFireBaseService } from '../../firebaseServices/studentFireBaseService';
 
 @Component({
   selector: 'page-addStudent',

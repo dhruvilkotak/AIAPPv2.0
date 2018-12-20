@@ -31,6 +31,7 @@ export class AssessmentTest
             var fileData:any = JSON.parse(val);
             this.studentObject = fileData.studentObject;
             this.assessmentTestObjectArray=this.studentObject.assessmentDataArrayObject;
+            console.log("asse:"+this.assessmentTestObjectArray.length);
             this.numberOfTest=this.assessmentTestObjectArray.length;
           });
    }
@@ -66,7 +67,7 @@ export class AssessmentTest
         if(Student!=null)
         {
             console.log("assessment:");
-            this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject);
+           // this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject);
             console.log("studentName:"+this.studentObject.firstName+" "+this.studentObject.lastName);
             this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
         }

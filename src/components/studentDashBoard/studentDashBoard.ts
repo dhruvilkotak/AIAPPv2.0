@@ -37,9 +37,16 @@ export class StudentdashBoard {
         var fileData:any = JSON.parse(val);
         this.studentObject = fileData.studentObject;
         //this.studentObject=  JSON.parse(val).studentObj;
+        
+        if(this.studentObject.knwonArrayList!=null)
         this.knownWordLength=this.studentObject.knwonArrayList.length;
+        
+        if(this.studentObject.unKnownArrayList!=null)
         this.unKnownWordLength=this.studentObject.unKnownArrayList.length;
-         this.newLearnedWordLength=this.studentObject.knownUnknownArrayList.length;
+        
+        if(this.studentObject.knownUnknownArrayList!=null)
+        this.newLearnedWordLength=this.studentObject.knownUnknownArrayList.length;
+        
         for(let assessmentTestobj of this.studentObject.assessmentDataArrayObject){
           if(!assessmentTestobj.testStatus)
             this.beginAssessmentDone=assessmentTestobj.testStatus;
@@ -56,9 +63,16 @@ export class StudentdashBoard {
       var fileData:any = JSON.parse(val);
       console.log("come back:");
       this.studentObject = fileData.studentObject;
-      this.knownWordLength=this.studentObject.knwonArrayList.length;
-      this.newLearnedWordLength=this.studentObject.knownUnknownArrayList.length;
+    
+      if(this.studentObject.knwonArrayList!=null)
+        this.knownWordLength=this.studentObject.knwonArrayList.length;
+        
+        if(this.studentObject.unKnownArrayList!=null)
         this.unKnownWordLength=this.studentObject.unKnownArrayList.length;
+        
+        if(this.studentObject.knownUnknownArrayList!=null)
+        this.newLearnedWordLength=this.studentObject.knownUnknownArrayList.length;
+    
         this.beginAssessmentDone=true;
         for(let assessmentTestobj of this.studentObject.assessmentDataArrayObject){
           console.log("status:"+assessmentTestobj.testStatus);
@@ -90,14 +104,7 @@ export class StudentdashBoard {
     this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
     this.storage.set('methodIndex',JSON.stringify({ methodIndex: methodIndex }) );
     this.navCtrl.push(PreSessionView);
-    
-    // if(this.unKnownWordLength >= this.studentObject.methodArray[methodIndex].ratio2 && this.knownWordLength>= this.studentObject.methodArray[methodIndex].ratio1 )
-    // {
-     
-    // }
-    // else{
-    //   this.error="can not start session.";
-    // }
+   
      console.log("id:"+methodIndex);
   }
 

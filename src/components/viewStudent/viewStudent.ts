@@ -8,7 +8,7 @@ import { Storage} from '@ionic/storage';
 import { Platform } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { DocumentPicker } from '@ionic-native/document-picker';
-import { StudentFireBaseService } from '../../services/studentFireBaseService';
+import { StudentFireBaseService } from '../../firebaseServices/studentFireBaseService';
 
 @Component({
     selector: 'page-viewStudent',
@@ -84,7 +84,6 @@ export class ViewStudent{
               text: 'Cancel',
               role: 'cancel',
               handler: () => {
-
                 console.log('Cancel clicked');
               }
             },
@@ -94,12 +93,7 @@ export class ViewStudent{
                 var studentFireBaseService:StudentFireBaseService=new StudentFireBaseService();
                 studentFireBaseService.removeStudent(studentObj);
                 this.studentServicesObject.removeStudentFromArray(this.allData,studentObj);
-                
                 this.filterItems();   
-                // this.studentServicesObject.removeStudentFromFile(this.file,this.allData).then(removeData=>{
-                // this.error=removeData;
-                    
-                // }).catch(err=>console.log("e:"+err));
                 console.log('yes clicked');
               }
             }

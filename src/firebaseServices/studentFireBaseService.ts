@@ -1,6 +1,6 @@
 import { Student } from "../models/student";
 import { StudentFireBaseDao } from "../dao/StudentFireBaseDao";
-import { StudentServices } from "./studentAddRemoveServices";
+import { StudentServices } from "../services/studentAddRemoveServices";
 import { DocumentPicker } from "@ionic-native/document-picker";
 import { Platform } from "ionic-angular";
 import { File } from "@ionic-native/file";

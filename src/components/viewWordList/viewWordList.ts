@@ -5,6 +5,7 @@ import { File } from '@ionic-native/file';
 import { WordServices } from '../../services/wordServices';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { DocumentPicker } from '@ionic-native/document-picker';
+import { WordDataFireBaseService } from '../../firebaseServices/WordDataFireBaseService';
 
 @Component({
     selector: 'page-viewWordList',
@@ -15,6 +16,7 @@ export class ViewWordList{
     allData:Array<WordData> = [];
     private searchTerm: string = '';
     wordServiceObject:WordServices=new WordServices();
+    wordDataFireBaseService:WordDataFireBaseService = new WordDataFireBaseService();
     error:String='';
     constructor(private navCtrl: NavController ,
       private file:File , 
@@ -66,12 +68,10 @@ export class ViewWordList{
             {
               text: 'yes',
               handler: () => {
+                this.wordDataFireBaseService.removeWordData(wordDataObj);
                 this.wordServiceObject.removeWordFromArray(this.allData,wordDataObj);
-                this.wordServiceObject.removeWordFromArray(this.wordDataList,wordDataObj);
-                this.wordServiceObject.removeWordFromFile(this.file,this.allData).then(removeData=>{
-                 this.error=removeData;
-                    
-                }).catch(err=>console.log("e:"+err));
+                this.filterItems();
+                //this.wordDataFireBaseService.r
                 console.log('yes clicked');
               }
             }
@@ -86,17 +86,9 @@ export class ViewWordList{
  
       importWordsFile(){
        
-       
-        this.wordServiceObject.importWordFile(this.file,this.plt,this.docPicker,this.wordServiceObject,this.allData).then(dataArray=>{
-          console.log("msg:"+dataArray.length);
-          this.allData=dataArray;
-          this.filterItems();
-         
-            
-        }).catch(err=>{
-
-            console.log("error:"+err);
-        });
+       var wordDataFireBaseService:WordDataFireBaseService = new WordDataFireBaseService();
+       wordDataFireBaseService.importWordDataFile(this.file,this.plt,this.docPicker,this.allData);
+        this.filterItems();
       }
 
       removeAllWords(){

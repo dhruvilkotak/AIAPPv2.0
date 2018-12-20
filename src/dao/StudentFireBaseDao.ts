@@ -32,6 +32,7 @@ export class StudentFireBaseDao{
                  resolve(studentDetailsArray);
                     databaseRef.off();
                 }    
+                databaseRef.off();
                 return;
             });
         });
@@ -53,6 +54,7 @@ export class StudentFireBaseDao{
                 studentObject.studentUID=newInfo.key;
                 newInfo.set(studentObject);
             }
+            query.off();
             return;
         });
     }
@@ -82,6 +84,7 @@ export class StudentFireBaseDao{
                     newInfo.set(studentObject);
                     studentDetailsArray.push(studentObject);
                 }
+                query.off();
                 return;
             }); 
         
@@ -102,7 +105,6 @@ export class StudentFireBaseDao{
         return new Promise(function(resolve, reject)
         {
             var fileData:any;
-            var studentDetailsArray: Array<Student> = [];
             var error="";
             if (plt.is('ios'))
             {
@@ -128,14 +130,14 @@ export class StudentFireBaseDao{
 
                               studentFileArray=fileData.studentDetailsArray;
                               console.log("fileArray:"+studentFileArray+"  len:"+studentFileArray.length);
-                              this.exportStudentFireBase(studentFileArray,studentDetailsArray);
+                              this.exportStudentFireBase(studentFileArray,StudentDetailsArray);
                              resolve("done importing");    
                             }catch(e){
-                              reject(studentDetailsArray);    
+                              reject(StudentDetailsArray);    
                             }
                       }
                         else{
-                            reject(studentDetailsArray);
+                            reject(StudentDetailsArray);
                         }
                       
                     }).catch(err=>{
