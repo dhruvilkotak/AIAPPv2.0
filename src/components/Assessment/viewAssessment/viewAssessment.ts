@@ -8,6 +8,8 @@ import { ViewAssessmentWordObjects } from '../../../models/viewAssessmentWordObj
 import { StudentServices } from '../../../services/studentAddRemoveServices';
 import { File } from '@ionic-native/file';
 import { Storage } from '@ionic/storage';
+import { ViewAssessmentFireBaseService } from '../../../firebaseServices/viewAssessmentFireBaseService';
+import { StudentFireBaseService } from '../../../firebaseServices/studentFireBaseService';
 
 @Component({
     selector: 'page-viewAssessment',
@@ -25,6 +27,9 @@ export class ViewAssessmentTest
     assessmentTestDataObject:AssessmentTestData;
     assessmentWordDataArray:Array<ViewAssessmentWordObjects>=[];
     studentServiceObject:StudentServices=new StudentServices();
+    private viewAssessmentFireBaseService:ViewAssessmentFireBaseService = new ViewAssessmentFireBaseService();
+    private studentFireBaseService:StudentFireBaseService = new StudentFireBaseService();
+      
 
     constructor(private modalCtrl: ModalController,
         public navCtrl: NavController,
@@ -42,6 +47,7 @@ export class ViewAssessmentTest
                this.convertAssessmentTestObjectToword(this.studentObject);
                this.studentObject.convertToAssessmentWord=true;
                this.studentObject.assessmentWordDataArray=this.assessmentWordDataArray;
+               this.viewAssessmentFireBaseService.updateAssessmentWordDataArray(this.studentObject);
                  this.goBackToView(this.studentObject);
             }   
             else{
@@ -78,35 +84,43 @@ export class ViewAssessmentTest
         console.log("assessize:"+this.assessmentTestObjectArray.length+"  s:"+this.assessmentTestObjectArray[0].testStatus);
         for(let assessmentTestDataObject of this.assessmentTestObjectArray)
         {
-            for(let wordDataObj of assessmentTestDataObject.knownWordList)
+            if(assessmentTestDataObject.knownWordList!=null)
             {
-                let viewAssessmentWordObject:ViewAssessmentWordObjects= this.getAssessmentObject(wordDataObj);
-                if(viewAssessmentWordObject==null)
+                for(let wordDataObj of assessmentTestDataObject.knownWordList)
                 {
-                    viewAssessmentWordObject=new ViewAssessmentWordObjects();
-                    viewAssessmentWordObject.totalTest=studentObject.assessmentDataArrayObject.length;
-                }
-                viewAssessmentWordObject.wordData=wordDataObj;
-                viewAssessmentWordObject.testArrayKnown.push(true);
-                viewAssessmentWordObject.stringKnownArray.push("Known");
-                viewAssessmentWordObject.totalKnownTime=viewAssessmentWordObject.totalKnownTime+1;
-                this.updateAssessmentObjectToArray(viewAssessmentWordObject);
-            } 
-            for(let wordDataObj of assessmentTestDataObject.unknownWordList)
+                    let viewAssessmentWordObject:ViewAssessmentWordObjects= this.getAssessmentObject(wordDataObj);
+                    if(viewAssessmentWordObject==null)
+                    {
+                        viewAssessmentWordObject=new ViewAssessmentWordObjects();
+                        viewAssessmentWordObject.totalTest=studentObject.assessmentDataArrayObject.length;
+                    }
+                    viewAssessmentWordObject.wordData=wordDataObj;
+                    viewAssessmentWordObject.testArrayKnown.push(true);
+                    viewAssessmentWordObject.stringKnownArray.push("Known");
+                    viewAssessmentWordObject.totalKnownTime=viewAssessmentWordObject.totalKnownTime+1;
+                    this.updateAssessmentObjectToArray(viewAssessmentWordObject);
+                }  
+            }
+            if(assessmentTestDataObject.unknownWordList != null)
             {
-                let viewAssessmentWordObject:ViewAssessmentWordObjects= this.getAssessmentObject(wordDataObj);
-                if(viewAssessmentWordObject==null)
+                for(let wordDataObj of assessmentTestDataObject.unknownWordList)
                 {
-                    viewAssessmentWordObject=new ViewAssessmentWordObjects();
-                    viewAssessmentWordObject.totalTest=studentObject.assessmentDataArrayObject.length;
+                    let viewAssessmentWordObject:ViewAssessmentWordObjects= this.getAssessmentObject(wordDataObj);
+                    if(viewAssessmentWordObject==null)
+                    {
+                        viewAssessmentWordObject=new ViewAssessmentWordObjects();
+                        viewAssessmentWordObject.totalTest=studentObject.assessmentDataArrayObject.length;
+                    }
+                    viewAssessmentWordObject.wordData=wordDataObj;
+                    viewAssessmentWordObject.testArrayKnown.push(false);
+                    viewAssessmentWordObject.stringKnownArray.push("Unknown");
+                    this.updateAssessmentObjectToArray(viewAssessmentWordObject);
                 }
-                viewAssessmentWordObject.wordData=wordDataObj;
-                viewAssessmentWordObject.testArrayKnown.push(false);
-                viewAssessmentWordObject.stringKnownArray.push("Unknown");
-                this.updateAssessmentObjectToArray(viewAssessmentWordObject);
-            } 
-            
+            }
+
         }
+        
+
    }
     getAssessmentObject( wordData:WordData)
     {
@@ -125,6 +139,8 @@ export class ViewAssessmentTest
     updateAssessmentObjectToArray(viewAssessmentWordObject:ViewAssessmentWordObjects)
     {
         var i:number=0;
+        if(this.assessmentWordDataArray==null)
+            this.assessmentWordDataArray=[];
         for(let obj of this.assessmentWordDataArray)
         {
             if(obj.assessmentWordObjectId==viewAssessmentWordObject.assessmentWordObjectId)
@@ -160,6 +176,7 @@ export class ViewAssessmentTest
                 this.studentObject.assessmentWordDataArray[i].wordType=wordType;
                 this.studentObject.assessmentWordDataArray[i].wordAdded=true;
                 
+                this.viewAssessmentFireBaseService.updateassessmentWordDataArrayObject(this.studentObject,i);
                 //this.studentObject.assessmentWordDataArray.splice(i, 1);
                 this.assessmentWordDataArray=this.studentObject.assessmentWordDataArray;
                 return;
@@ -180,12 +197,16 @@ export class ViewAssessmentTest
                     
                     obj.wordType="Known";
                     obj.wordAdded=true;
+                    if(this.studentObject.knwonArrayList==null)
+                        this.studentObject.knwonArrayList=[];
                     this.studentObject.knwonArrayList.push(obj.wordData);
                 }
                 else
                 {
                     obj.wordType="UnKnown";
                     obj.wordAdded=true;
+                    if(this.studentObject.unKnownArrayList==null)
+                        this.studentObject.unKnownArrayList=[];
                     this.studentObject.unKnownArrayList.push(obj.wordData);
                 }
                 obj.wordAdded=true;
@@ -193,6 +214,9 @@ export class ViewAssessmentTest
         }
         this.assessmentWordDataArray=this.studentObject.assessmentWordDataArray;
         //this.assessmentWordDataArray=[];
+        this.viewAssessmentFireBaseService.updateAssessmentWordDataArray(this.studentObject);
+        this.studentFireBaseService.updateKnownList(this.studentObject);
+        this.studentFireBaseService.updateUnKnownList(this.studentObject);
         this.goBackToView(this.studentObject);
     
     }
@@ -202,7 +226,7 @@ export class ViewAssessmentTest
         if(Student!=null)
         {
             console.log("studentName:"+this.studentObject.firstName+" "+this.studentObject.lastName);
-            this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject);
+           // this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject);
             this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
         }
     }
@@ -223,8 +247,11 @@ export class ViewAssessmentTest
             {
               text: 'yes',
               handler: () => {
+                if(this.studentObject.knwonArrayList==null)
+                    this.studentObject.knwonArrayList=[];
                 this.studentObject.knwonArrayList.push(wordDataObj);
                 this.removeWordFromStudentAssessment(wordDataObj,"Known");
+                this.studentFireBaseService.updateKnownList(this.studentObject);
                 this.goBackToView(this.studentObject);        
               }
             }
@@ -250,8 +277,11 @@ export class ViewAssessmentTest
             {
               text: 'yes',
               handler: () => {
+                if(this.studentObject.unKnownArrayList == null)
+                    this.studentObject.unKnownArrayList=[];      
                 this.studentObject.unKnownArrayList.push(wordDataObj);
                 this.removeWordFromStudentAssessment(wordDataObj,"UnKnown");
+                this.studentFireBaseService.updateUnKnownList(this.studentObject);
                 this.goBackToView(this.studentObject);     
               }
             }

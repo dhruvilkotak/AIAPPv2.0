@@ -6,25 +6,24 @@ import { Platform } from "ionic-angular";
 import { File } from "@ionic-native/file";
 
 export class StudentFireBaseService{
-
+    private studentFireBaseDao:StudentFireBaseDao=new StudentFireBaseDao();
+      
     addStudentToFireBase(studentObject:Student)
     {
         
-        var studentFireBaseDao:StudentFireBaseDao=new StudentFireBaseDao();
-        studentFireBaseDao.addStudent(studentObject);
+        this.studentFireBaseDao.addStudent(studentObject);
     }
 
     removeStudent(studentObject:Student)
     {
-        var studentFireBaseDao:StudentFireBaseDao=new StudentFireBaseDao();
-        studentFireBaseDao.removeStudent(studentObject);
+        this.studentFireBaseDao.removeStudent(studentObject);
     }
 
     getStudentList():Promise<any>
     {
         return new Promise(function(resolve, reject) {
-            var studentDetailsArray:Array<Student>=[];
             var studentFireBaseDao:StudentFireBaseDao=new StudentFireBaseDao();
+            var studentDetailsArray:Array<Student>=[];
             studentFireBaseDao.getStudentList().then(data=>{
                 studentDetailsArray=data;
                 resolve(studentDetailsArray);
@@ -40,14 +39,22 @@ export class StudentFireBaseService{
     {
         return new Promise(function(resolve, reject)
         {
-            var studentFireBaseDao:StudentFireBaseDao = new StudentFireBaseDao();
-            studentFireBaseDao.importStudentFile(file,plt,docPicker,StudentDetailsArray).then(data=>{
+            this.studentFireBaseDao.importStudentFile(file,plt,docPicker,StudentDetailsArray).then(data=>{
                 resolve(data);
             }).catch(err=>{
                 reject(err);
             });
         });
             
+    }
+
+    updateKnownList(studentObject:Student)
+    {
+        this.studentFireBaseDao.updateKnownList(studentObject);
+    }
+    updateUnKnownList(studentObject:Student)
+    {
+        this.studentFireBaseDao.updateUnKnownList(studentObject);
     }
 
 }

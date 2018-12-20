@@ -153,5 +153,15 @@ export class StudentFireBaseDao{
       }
 
       
+      updateKnownList(studentObject:Student)
+      {
+        let databaseRef = firebase.database().ref('StudentDataList/'+studentObject.studentUID+'/knwonArrayList/');
+        databaseRef.update(studentObject.knwonArrayList);
+      }
+      updateUnKnownList(studentObject:Student)
+      {
+        let databaseRef = firebase.database().ref('StudentDataList/'+studentObject.studentUID+'/unKnownArrayList/');
+        databaseRef.update(studentObject.unKnownArrayList);
+      }
 
 }
