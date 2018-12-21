@@ -63,4 +63,9 @@ export class StudentFireBaseService{
         this.studentFireBaseDao.updateUnKnownList(studentObject);
     }
 
+    addSessionToMethod(studentObject:Student,methodIndex:number)
+    {
+        this.studentFireBaseDao.addSessionToMethod(studentObject,methodIndex);
+    }
+
 }

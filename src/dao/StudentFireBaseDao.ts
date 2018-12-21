@@ -176,4 +176,11 @@ export class StudentFireBaseDao{
         databaseRef.update(studentObject.unKnownArrayList);
       }
 
+    addSessionToMethod(studentObject:Student,methodIndex:number)
+    {
+        var lastIndex=studentObject.methodArray[methodIndex].sessionsArray.length-1;
+        let databaseRef = firebase.database().ref('StudentDataList/'+studentObject.studentUID+'/methodArray/'+methodIndex+'/sessionsArray/'+lastIndex+'/');
+        databaseRef.update(studentObject.methodArray[methodIndex].sessionsArray[lastIndex]);
+    }
+
 }

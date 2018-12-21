@@ -27,7 +27,7 @@ export class PreSessionView{
     private studentObject:Student=new Student();
     private methodIndex:number=0;
     private methodName:string="";
-    private totalSessions:number;
+    private totalSessions:number=0;
     private sessionCounter : number=0;
     private error:string="";
     private incrementalRehersalServiceObject:IncrementalRehersalService=new IncrementalRehersalService();
@@ -56,7 +56,8 @@ export class PreSessionView{
                 var fileData:any = JSON.parse(val);
                 this.methodIndex = fileData.methodIndex;
                 console.log("methodIndex:"+this.methodIndex);
-                
+                if(this.studentObject.methodArray[this.methodIndex].sessionsArray == null)
+                    this.studentObject.methodArray[this.methodIndex].sessionsArray=[];
                 this.totalSessions=this.studentObject.methodArray[this.methodIndex].sessionsArray.length; 
                 console.log("total sesions:"+this.totalSessions);
                 
@@ -65,18 +66,7 @@ export class PreSessionView{
                 this.ratio1=this.studentObject.methodArray[this.methodIndex].ratio1;
                 this.ratio2=this.studentObject.methodArray[this.methodIndex].ratio2;
 
-            //     if(this.totalSessions==0)
-            //     {
-            //         var j:number=0;
-            //         while(j<this.ratio2)
-            //         {
-            //                 this.previousUnknownArray.push(this.studentObject.unKnownArrayList[j]);
-            //             j++;
-            //         }  
-            //    }
-            //    else{
-            //         this.previousUnknownArray=this.studentObject.methodArray[this.methodIndex].sessionsArray[this.totalSessions-1].unknownWordList;
-            //    }
+           
                console.log("previous:"+this.previousUnknownArray.length);
             });
         });
@@ -91,9 +81,12 @@ export class PreSessionView{
                 var fileData:any = JSON.parse(val);
                 this.methodIndex = fileData.methodIndex;
                 console.log("ioview method index:"+this.methodIndex);
+            if(this.studentObject.methodArray[this.methodIndex].sessionsArray == null)
+                this.studentObject.methodArray[this.methodIndex].sessionsArray=[];
+           
             this.totalSessions=this.studentObject.methodArray[this.methodIndex].sessionsArray.length; 
             this.previousUnknownArray=[];
-            if(this.totalSessions==0)
+            if(this.totalSessions<=0)
                 {
                     var j:number=0;
                     while(j<this.ratio2)
@@ -267,7 +260,7 @@ export class PreSessionView{
     {
         if(this.studentObject!=null)
         {
-            this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject);
+         //   this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject);
             this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
         }        
     }

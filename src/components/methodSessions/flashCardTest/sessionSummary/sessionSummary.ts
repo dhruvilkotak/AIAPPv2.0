@@ -82,9 +82,10 @@ export class SessionSummary{
     {
 
       this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
-      this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject).then(()=>{
-        this.goBackToView();
-      });
+      this.goBackToView();
+      // this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject).then(()=>{
+      //   
+      // });
       
     }
   

@@ -9,6 +9,7 @@ import { StudentServices } from '../../../services/studentAddRemoveServices';
 import { SessionSummary } from './sessionSummary/sessionSummary';
 import { Storage } from '@ionic/storage';
 import { WordServices } from '../../../services/wordServices';
+import { StudentFireBaseService } from '../../../firebaseServices/studentFireBaseService';
 
 @Component({
   selector: 'page-flashCardIntervention',
@@ -19,7 +20,7 @@ import { WordServices } from '../../../services/wordServices';
 export class FlashCardIntervetion{
   private studentObject:Student=new Student();
   private methodIndex:number;
-
+  private studentFireBaseService:StudentFireBaseService = new StudentFireBaseService();
    private wordDataObject:WordData=new WordData();
    private wordDataArray: Array<WordData> = [];
    private sessionCounter:number;
@@ -157,9 +158,12 @@ export class FlashCardIntervetion{
         //remove unknown if exist from student if possible
         console.log("final length:"+this.studentObject.unKnownArrayList.length+"  session:"+this.methodSessionObject.unknownWordList.length);
         this.wordServiceObj.removeArrayFromArray(this.studentObject.unKnownArrayList, this.methodSessionObject.unknownWordList);
+        //
+        this.studentFireBaseService.updateUnKnownList(this.studentObject);
         console.log("final length:"+this.studentObject.unKnownArrayList.length+"  session:"+this.methodSessionObject.unknownWordList.length);
-    
-      this.studentObject.methodArray[this.methodIndex].sessionsArray.push(this.methodSessionObject);
+        if(this.studentObject.methodArray[this.methodIndex].sessionsArray == null)
+          this.studentObject.methodArray[this.methodIndex].sessionsArray = [];
+        this.studentObject.methodArray[this.methodIndex].sessionsArray.push(this.methodSessionObject);
     }
       
     
@@ -175,12 +179,15 @@ export class FlashCardIntervetion{
     {
       console.log("studentName:"+this.studentObject.firstName+" "+this.studentObject.lastName);
       this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
-   
-      this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject).then(()=>{
-        this.goBackToView();
-        console.log("sessionLength:"+this.studentObject.methodArray[this.methodIndex].sessionsArray.length)
+      //add  method array _ session array
+       
+       this.studentFireBaseService.addSessionToMethod(this.studentObject,this.methodIndex);
+       this.goBackToView();
+      // this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject).then(()=>{
+      //   this.goBackToView();
+      //   console.log("sessionLength:"+this.studentObject.methodArray[this.methodIndex].sessionsArray.length)
         
-      });
+      // });
     }
     
   }

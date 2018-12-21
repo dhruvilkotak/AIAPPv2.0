@@ -250,6 +250,7 @@ export class ViewAssessmentTest
     }
     goBackToView(studentObject:Student)
     {
+        this.showKnownUnKnownWords();
         this.chekEnableDisable();
         if(Student!=null)
         {

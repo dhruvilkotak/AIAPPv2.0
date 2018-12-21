@@ -89,7 +89,9 @@ export class PreSessionResult{
                                     i++;
                                  }   
                                 else{
-                                    this.wordServiceObj.removeWordFromArray(this.studentObject.knownUnknownArrayList,presetObj.wordData)
+                                    if(this.studentObject.knownUnknownArrayList==null)
+                                         this.studentObject.knownUnknownArrayList=[];
+                                    this.wordServiceObj.removeWordFromArray(this.studentObject.knownUnknownArrayList,presetObj.wordData);
                                     this.studentObject.knownUnknownArrayList.push(presetObj.wordData);
                                   }
                                
