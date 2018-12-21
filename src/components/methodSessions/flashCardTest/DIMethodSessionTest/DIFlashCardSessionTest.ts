@@ -10,6 +10,7 @@ import { StudentServices } from '../../../../services/studentAddRemoveServices';
 import { SessionSummary } from '../sessionSummary/sessionSummary';
 import { DirectInstructionServices } from '../../../../services/DirectInstructionSevice';
 import { WordServices } from '../../../../services/wordServices';
+import { StudentFireBaseService } from '../../../../firebaseServices/studentFireBaseService';
 @Component({
   selector: 'page-DIFlashCardSessionTest',
   templateUrl: 'DIFlashCardSessionTest.html'
@@ -158,6 +159,8 @@ export class DIFlashCardSessionTest{
     {
       console.log("final length:"+this.studentObject.unKnownArrayList.length+"  session:"+this.methodSessionObject.unknownWordList.length);
         this.wordServiceObj.removeArrayFromArray(this.studentObject.unKnownArrayList, this.methodSessionObject.unknownWordList);
+        var studentFireBaseService:StudentFireBaseService = new StudentFireBaseService();
+        studentFireBaseService.updateUnKnownList(this.studentObject);
         console.log("final length:"+this.studentObject.unKnownArrayList.length+"  session:"+this.methodSessionObject.unknownWordList.length);
       this.studentObject.methodArray[this.methodIndex].sessionsArray.push(this.methodSessionObject);
     }
@@ -174,12 +177,12 @@ export class DIFlashCardSessionTest{
     {
       console.log("studentName:"+this.studentObject.firstName+" "+this.studentObject.lastName);
       this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
-   
-      this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject).then(()=>{
-        this.goBackToView();
-        console.log("sessionLength:"+this.studentObject.methodArray[this.methodIndex].sessionsArray.length)
+      this.goBackToView();
+      // this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject).then(()=>{
+      // 
+      //   console.log("sessionLength:"+this.studentObject.methodArray[this.methodIndex].sessionsArray.length)
         
-      });
+      // });
     }
     
   }

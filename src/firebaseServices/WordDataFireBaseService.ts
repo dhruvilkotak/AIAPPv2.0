@@ -21,6 +21,9 @@ export class WordDataFireBaseService{
             });
         });
     }
+
+  
+
     getWordList():Promise<any>
     {
         return new Promise(function(resolve, reject) {
