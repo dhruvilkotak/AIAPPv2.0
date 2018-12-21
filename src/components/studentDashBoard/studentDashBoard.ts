@@ -80,7 +80,7 @@ export class StudentdashBoard {
             this.beginAssessmentDone=assessmentTestobj.testStatus;
         }
         this.methodObjectArray=this.studentObject.methodArray;
-        this.goBackToView();
+       // this.goBackToView();
         //this.beginAssessmentDone=this.studentObject.beginningAssessment[0] ;
         console.log("studDash:"+this.studentObject.studentId+" test:"+this.beginAssessmentDone);
   
@@ -109,13 +109,13 @@ export class StudentdashBoard {
      console.log("id:"+methodIndex);
   }
 
-  goBackToView()
-  {
-    this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
-    this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject);
+  // goBackToView()
+  // {
+  //   this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
+  // //  this.studentServiceObject.updateStudentToFile(this.file,this.studentObject,this.studentServiceObject);
     
-   //  this.navCtrl.getPrevious().data.studentObject =this.studentObject;  
-  }
+  //  //  this.navCtrl.getPrevious().data.studentObject =this.studentObject;  
+  // }
 
   viewStudentWords()
   {

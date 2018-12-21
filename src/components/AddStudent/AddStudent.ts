@@ -38,18 +38,23 @@ export class AddStudent {
       this.studentDetails.firstName=this.firstname;
       this.studentDetails.lastName=this.lastname;
       this.studentDetails.studentId=this.studentid;
+     // this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentDetails }) );
     
-      this.studentFireBaseServicesObject.addStudentToFireBase(this.studentDetails,this.storage);
-      this.firstname="";
-      this.lastname="";
-      this.studentid="";
-      //this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentDetails }) );
-    
-      this.navCtrl.setRoot(HomePage).then(()=>{
-        this.navCtrl.push(StudentdashBoard);
+      this.studentFireBaseServicesObject.addStudentToFireBase(this.studentDetails).then(studentObj=>{
+        this.firstname="";
+        this.lastname="";
+        this.studentid="";
+        this.storage.set('studentObject',JSON.stringify({ studentObject: studentObj }) );                  
+        this.navCtrl.setRoot(HomePage).then(()=>{
+          this.navCtrl.push(StudentdashBoard);
+        }).catch(err=>{
+          this.error=err;
+        });
+       
       }).catch(err=>{
-        this.error=err;
+
       });
+      
      
     }
     catch(e) {

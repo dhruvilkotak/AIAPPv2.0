@@ -39,27 +39,33 @@ export class StudentFireBaseDao{
         });
     }
 
-    addStudent(studentObject:Student,storage:Storage){
-        
-        let databaseRef = firebase.database().ref('StudentDataList/');
-        var query=databaseRef.orderByChild('studentId').equalTo(""+studentObject.studentId);
-        query.on('value',function(snapshot){
-            console.log("childern:",snapshot.toJSON);
-            if(snapshot.hasChildren())
-            {
+    addStudent(studentObject:Student):Promise<any>
+    {
+        return new Promise(function(resolve,reject){
+            let databaseRef = firebase.database().ref('StudentDataList/');
+            var query=databaseRef.orderByChild('studentId').equalTo(""+studentObject.studentId);
+            query.on('value',function(snapshot){
+                console.log("childern:",snapshot.toJSON);
+                if(snapshot.hasChildren())
+                {
+                    
+                }
+                else{
+                    let databaseRef = firebase.database().ref('StudentDataList/');
+                    let newInfo = databaseRef.push();
+                    studentObject.studentUID=newInfo.key;
+                    newInfo.set(studentObject);
+                    
+                    console.log("student:"+studentObject.firstName);
+                    resolve(studentObject);
+                    
+                }
+                query.off();
                 
-            }
-            else{
-                let databaseRef = firebase.database().ref('StudentDataList/');
-                let newInfo = databaseRef.push();
-                studentObject.studentUID=newInfo.key;
-                newInfo.set(studentObject);
-                
-                this.storage.set('studentObject',JSON.stringify({ studentObject: studentObject }) );
-            }
-            query.off();
-            return;
+                return;
+            });
         });
+        
     }
 
     removeStudent(studentObject:Student)

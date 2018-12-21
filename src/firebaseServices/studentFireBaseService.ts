@@ -9,10 +9,15 @@ import { Storage } from "@ionic/storage";
 export class StudentFireBaseService{
     private studentFireBaseDao:StudentFireBaseDao=new StudentFireBaseDao();
       
-    addStudentToFireBase(studentObject:Student,storage:Storage)
+    addStudentToFireBase(studentObject:Student):Promise<any>
     {
+        return new Promise(function(resolve,reject){
+            var studentFireBaseDao:StudentFireBaseDao=new StudentFireBaseDao();
+            studentFireBaseDao.addStudent(studentObject).then(studentObj=>{
+                resolve(studentObj);
+            });
+        });
         
-        this.studentFireBaseDao.addStudent(studentObject,storage);
     }
 
     removeStudent(studentObject:Student)
