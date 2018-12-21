@@ -246,6 +246,26 @@ export class StudentServices {
         
       }
 
+      exportStudentFileFromArray(file:File ,plt:Platform,socialSharing:SocialSharing,studentDetailsArray:Array<Student>)
+      {
+        let dir = file.tempDirectory;
+        let fileName = "studentDetails.txt"; // please set your fileName;
+        let blob = ""; // please set your data;
+
+        if (plt.is('ios')) {
+            // This will only print when on iOS
+            console.log('I am an iOS device!');
+            file.writeFile(file.tempDirectory,'studentDetails.txt',JSON.stringify({ studentDetailsArray: studentDetailsArray }),{replace: true}).then(value=>{
+                console.log("file write succ"+value.nativeURL);
+                socialSharing.share(null,null,null,value.nativeURL);
+            }).catch(err=>{
+              console.log("file does not write");
+              //reject("file does not write");
+            }); 
+          }
+    
+        }
+
 
       importStudentFile(file:File ,plt:Platform,docPicker:DocumentPicker,studentServicesObject:StudentServices,StudentDetailsArray:Array<Student>):Promise<any>
       {

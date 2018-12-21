@@ -322,4 +322,33 @@ export class WordServices{
          });
         
     }
+
+    exportWordFileFromArray(file:File ,plt:Platform,socialSharing:SocialSharing,wordDataList:Array<WordData>)
+    {
+        let allDataArray=[];
+        let wordObjArray=["word Id", "Word Text", "Word Category"];
+        var line=wordObjArray.join(",");
+        //allDataArray.push("data:text/csv;charset=utf-8,"+line)
+        allDataArray.push(line)
+        for(let wordObj of wordDataList)
+        {
+            let wordObjArray=[wordObj.wordId,wordObj.wordText,wordObj.wordCategory];
+            line=wordObjArray.join(',');
+            allDataArray.push(line);
+        }
+        var csvContent=allDataArray.join('\r');
+        
+        if (plt.is('ios')) {
+            // This will only print when on iOS
+            file.writeFile(file.tempDirectory,'WordDetails.csv',csvContent+"",{replace: true}).then(value=>{
+                console.log("file write succ"+value.nativeURL);
+                socialSharing.share(null,null,null,value.nativeURL);
+            }).catch(err=>{
+            console.log("file does not write");
+            //reject("file does not write");
+            });    console.log('I am an iOS device!');
+        }
+
+    }
+
 }

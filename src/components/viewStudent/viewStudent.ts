@@ -104,7 +104,7 @@ export class ViewStudent{
  
       exportStudentFile()
       {
-        this.studentServicesObject.exportStudentFile(this.file,this.plt,this.socialSharing);
+        this.studentServicesObject.exportStudentFileFromArray(this.file,this.plt,this.socialSharing,this.allData);
       }
 
       importStudentFile()

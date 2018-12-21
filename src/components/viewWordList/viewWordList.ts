@@ -90,7 +90,8 @@ export class ViewWordList{
       }
 
       exportWordsFile(){
-        this.wordServiceObject.exportWordFile(this.file,this.plt,this.socialSharing,this.wordServiceObject);
+        this.wordServiceObject.exportWordFileFromArray(this.file,this.plt,this.socialSharing,this.allData);
+
       }
  
       importWordsFile(){
