@@ -34,11 +34,11 @@ export class ViewWordList{
         }).catch(err=>{
 
         });
-        this.wordServiceObject.getWordList(file).then(data=>{
-            this.wordDataList=data;
-            this.allData=data;
-            console.log("size:"+this.wordDataList.length+" id:"+this.wordDataList[0].wordId)
-        } ).catch(err=>console.log("erer:"+err));
+        // this.wordServiceObject.getWordList(file).then(data=>{
+        //     this.wordDataList=data;
+        //     this.allData=data;
+        //     console.log("size:"+this.wordDataList.length+" id:"+this.wordDataList[0].wordId)
+        // } ).catch(err=>console.log("erer:"+err));
     };
 
     filterItems(){

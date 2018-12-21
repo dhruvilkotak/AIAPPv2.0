@@ -264,9 +264,17 @@ export class WordDataFireBaseDao{
                 {
                     snapshot.forEach(function(childSnapshot) {
                         var key = childSnapshot.key;
-                        var wordDataObject:WordData = childSnapshot.val().val();
-                        console.log(" student text:"+wordDataObject.wordId);
-                        wordDataArray.push(wordDataObject);
+                        
+                        if(childSnapshot.hasChildren)
+                        {
+                            childSnapshot.forEach(function(grandChildSnapShot){
+                                var key2 = grandChildSnapShot.key;
+                                var wordDataObject = grandChildSnapShot.val();
+                                console.log(" student text:"+wordDataObject+" key:"+key);
+                                 wordDataArray.push(wordDataObject);
+                            });
+                        }
+                       
                    });
                    resolve(wordDataArray);
                    databaseRef.off();
