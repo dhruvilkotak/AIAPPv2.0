@@ -111,7 +111,7 @@ export class ViewStudent{
       {
         //this.studenrFirebaseService.
         this.studentFirebaseService.importStudentFile(this.file,this.plt,this.docPicker,this.allData).then(dataArray=>{
-          console.log("msg:"+dataArray.length);
+          console.log("msg:"+dataArray.length+"  alldata:"+this.allData.length);
           this.filterItems();   
         }).catch(err=>{
             console.log("error:"+err);

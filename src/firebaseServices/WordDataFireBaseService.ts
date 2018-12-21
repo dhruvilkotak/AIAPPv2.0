@@ -13,8 +13,12 @@ export class WordDataFireBaseService{
     {
         return new Promise(function(resolve, reject) {
               
-            var wordDataArray: Array<WordData> = [];
-            
+            var wordDataFireBaseDao:WordDataFireBaseDao = new WordDataFireBaseDao();
+            wordDataFireBaseDao.getWordList().then(data=>{
+                resolve(data);
+            }).catch(err=>{
+                resolve(err);
+            })
         });
     }
     addWordData(wordDataObj:WordData)
@@ -27,12 +31,12 @@ export class WordDataFireBaseService{
     {
         return new Promise(function(resolve, reject)
         {
-            // var wordDataFireBaseDao:WordDataFireBaseDao = new WordDataFireBaseDao();
-            // WordDataFireBaseDao.importStudentFile(file,plt,docPicker,WordDataList).then(data=>{
-            //     resolve(data);
-            // }).catch(err=>{
-            //     reject(err);
-            // });
+            var wordDataFireBaseDao:WordDataFireBaseDao = new WordDataFireBaseDao();
+            wordDataFireBaseDao.importWordDataFile(file,plt,docPicker,WordDataList).then(data=>{
+                resolve(data);
+            }).catch(err=>{
+                reject(err);
+            });
         });
             
     }

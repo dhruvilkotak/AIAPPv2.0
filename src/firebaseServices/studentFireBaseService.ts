@@ -45,7 +45,8 @@ export class StudentFireBaseService{
     {
         return new Promise(function(resolve, reject)
         {
-            this.studentFireBaseDao.importStudentFile(file,plt,docPicker,StudentDetailsArray).then(data=>{
+            var studentFireBaseDao:StudentFireBaseDao=new StudentFireBaseDao();
+            studentFireBaseDao.importStudentFile(file,plt,docPicker,StudentDetailsArray).then(data=>{
                 resolve(data);
             }).catch(err=>{
                 reject(err);

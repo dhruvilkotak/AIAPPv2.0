@@ -96,19 +96,15 @@ export class StudentFireBaseDao{
                 query.off();
                 return;
             }); 
-        
     }
 
-    exportStudentFireBase(studentFileArrayList:Array<Student>,studentDetailsArray:Array<Student>)
+    exportStudentToFireBase(studentFileArrayList:Array<Student>,studentDetailsArray:Array<Student>)
     {
         for(let studentObj of studentFileArrayList)
         {
             this.addExistStudent(studentObj,studentDetailsArray);
         }  
-       
     }
-
-
       importStudentFile(file:File ,plt:Platform,docPicker:DocumentPicker,StudentDetailsArray:Array<Student>):Promise<any>
       {
         return new Promise(function(resolve, reject)
@@ -139,8 +135,9 @@ export class StudentFireBaseDao{
 
                               studentFileArray=fileData.studentDetailsArray;
                               console.log("fileArray:"+studentFileArray+"  len:"+studentFileArray.length);
-                              this.exportStudentFireBase(studentFileArray,StudentDetailsArray);
-                             resolve("done importing");    
+                              var studentFireBaseDao:StudentFireBaseDao = new StudentFireBaseDao();
+                              studentFireBaseDao.exportStudentToFireBase(studentFileArray,StudentDetailsArray);
+                             resolve(StudentDetailsArray);    
                             }catch(e){
                               reject(StudentDetailsArray);    
                             }

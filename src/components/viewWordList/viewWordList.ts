@@ -25,6 +25,15 @@ export class ViewWordList{
       private socialSharing:SocialSharing,
       private docPicker: DocumentPicker) {
 
+        this.wordDataFireBaseService.getWordList().then(data=>{
+      
+          this.wordDataList=data;
+          this.allData=data;
+          console.log("size:"+this.wordDataList.length+" id:"+this.wordDataList[0].wordId)
+      
+        }).catch(err=>{
+
+        });
         this.wordServiceObject.getWordList(file).then(data=>{
             this.wordDataList=data;
             this.allData=data;
