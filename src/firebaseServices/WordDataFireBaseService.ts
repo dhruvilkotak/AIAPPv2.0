@@ -9,6 +9,18 @@ import { WordDataFireBaseDao } from '../dao/WordDataFireBaseDao';
 export class WordDataFireBaseService{
     
 
+    writeFireBaseWordToFile(file:File):Promise<any>
+    {
+        return new Promise(function(resolve, reject) {
+              
+            var wordDataFireBaseDao:WordDataFireBaseDao = new WordDataFireBaseDao();
+            wordDataFireBaseDao.writeFireBaseWordToFile(file).then(data=>{
+                resolve(data);
+            }).catch(err=>{
+                resolve(err);
+            });
+        });
+    }
     getWordList():Promise<any>
     {
         return new Promise(function(resolve, reject) {

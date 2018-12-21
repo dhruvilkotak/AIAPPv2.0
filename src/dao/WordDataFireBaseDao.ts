@@ -289,4 +289,30 @@ export class WordDataFireBaseDao{
             
         });
     }
+
+    writeFireBaseWordToFile(file:File):Promise<any>
+    {
+        return new Promise(function(resolve, reject) {
+                
+            var wordDataFireBaseDao:WordDataFireBaseDao = new WordDataFireBaseDao();
+            wordDataFireBaseDao.getWordList().then(data=>{
+                var wordArrayList:Array<WordData> =[]
+                wordArrayList=data;
+                file.createFile(file.dataDirectory,'WordDetails',true).then( fileEntry=>{
+                    console.log("file create");
+                    file.writeFile(file.dataDirectory,'WordDetails',JSON.stringify({ wordDetailsArray: wordArrayList }),{replace: true}).then(_=>{
+                          console.log("file write succ");
+                          console.log("size:"+wordArrayList.length);
+                      }).catch(err=>{
+                        console.log("file does not write");
+                        reject("file does not write");
+                      });
+                });
+                resolve(data);
+            }).catch(err=>{
+                resolve(err);
+            })
+            
+        });
+    }
 }

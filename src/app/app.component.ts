@@ -13,6 +13,8 @@ import { AddWordList } from '../components/addWordList/addWordList';
 import { FlashCard } from '../components/flashCardTest/flashCard';
 import { LineChart } from '../components/charts/lineCharts/lineCharts';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { WordDataFireBaseService } from '../firebaseServices/WordDataFireBaseService';
+import { File } from '@ionic-native/file';
 
 
 @Component({
@@ -28,7 +30,8 @@ export class MyApp {
   constructor(public platform: Platform, 
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen,
-    private screenOrientation: ScreenOrientation) {
+    private screenOrientation: ScreenOrientation,
+    private file:File) {
 
     this.initializeApp();
          
@@ -49,6 +52,12 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       console.log("screen orientation:landscape");
+      var wordDataFireBaseService:WordDataFireBaseService = new WordDataFireBaseService();
+      wordDataFireBaseService.writeFireBaseWordToFile(this.file).then(data=>{
+          
+        }).catch(err=>{
+          
+        });
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
            
     });
