@@ -28,6 +28,7 @@
                 <ion-item  >
                     <ion-row class="ion-title" style="background-color: silver;" justify-content-center align-items-center>
                         <ion-col >Word Text</ion-col>
+                        <ion-col>Test </ion-col>
                         <ion-col >Word Category</ion-col>
                         <ion-col >Post Test Completed</ion-col>
                         <ion-col style="background-color: white;">
@@ -42,6 +43,8 @@
                         <ion-item formArrayName="wordObjectsList" *ngFor="let wordObjects of newLearnedWords; let i = index">
                             <ion-row  justify-content-center align-items-center>
                                 <ion-col >{{wordObjects.wordData.wordText}}</ion-col>
+                                <ion-col >{{wordObjects.methodName}}</ion-col>
+                                
                                 <ion-col >{{wordObjects.wordData.wordCategory}}</ion-col>
                                 <ion-col >{{wordObjects.postAssessmentCounter}}</ion-col>
                                 <ion-col justify-content-center align-items-center>

@@ -52,7 +52,7 @@ export class StartNewPostAssessment{
                 this.allData_newLearnedWords=this.studentObject.newKnownUnknownArrayList;
 
                 this.error="";
-                console.log("len:"+this.allData_newLearnedWords.length+"  start new post assessment:"+ JSON.stringify({x:this.allData_newLearnedWords[0].wordData}));
+                console.log("len:"+this.allData_newLearnedWords[0].methodName+"  start new post assessment:"+ JSON.stringify({x:this.allData_newLearnedWords[0].wordData}));
                 
                 this.controls = this.allData_newLearnedWords.map(c => new FormControl(true));
                   this.myGroup = this.formBuilder.group({
