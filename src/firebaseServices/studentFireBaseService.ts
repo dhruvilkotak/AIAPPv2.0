@@ -5,6 +5,7 @@ import { DocumentPicker } from "@ionic-native/document-picker";
 import { Platform } from "ionic-angular";
 import { File } from "@ionic-native/file";
 import { Storage } from "@ionic/storage";
+import { WordData } from "../models/wordData";
 
 export class StudentFireBaseService{
     private studentFireBaseDao:StudentFireBaseDao=new StudentFireBaseDao();
@@ -69,4 +70,22 @@ export class StudentFireBaseService{
         this.studentFireBaseDao.addSessionToMethod(studentObject,methodIndex);
     }
 
+    removeWordsFromUnKnownArray(studentObject:Student , subWordArray:Array<WordData>)
+    {
+        this.studentFireBaseDao.removeWordsFromUnKnownArray(studentObject,subWordArray);
+    }
+
+    maintainUnKnownKnownArray(studentObject:Student )
+    {
+        this.studentFireBaseDao.maintainUnKnownKnownArray(studentObject);
+    }
+
+    updateKnownUnknwonList(studentObject:Student){
+          
+        this.studentFireBaseDao.updateKnownUnknwonList(studentObject);
+    }
+    updateNewKnownUnknwonList(studentObject:Student){
+          
+        this.studentFireBaseDao.updateNewKnownUnknwonList(studentObject);
+    }
 }

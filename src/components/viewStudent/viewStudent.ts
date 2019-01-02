@@ -52,12 +52,13 @@ export class ViewStudent{
     ionViewDidLoad() {
       console.log("studentObject"+this.storage.get('studentObject') == null );
       this.storage.set('studentObject',null);
+      this.storage.clear();
     }
     public ionViewWillEnter() {
       console.log("studentObject  ion views"+this.storage.get('studentObject') == null );
       this.storage.set('studentObject',null);
       this.studentFirebaseService.getStudentList().then(data=>{
-        console.log("ion");
+        console.log("ion will enter");
         this.studentDetailsArray=data;
         this.allData=data;
       });
@@ -71,8 +72,9 @@ export class ViewStudent{
     viewStudentData(studentObj:Student)
     {
         this.storage.set('studentObject',JSON.stringify({ studentObject: studentObj }) );
-        this.navCtrl.push(StudentdashBoard);
+        
        console.log("id:"+studentObj.studentId);
+        this.navCtrl.push(StudentdashBoard);
     }
 
     presentConfirm(studentObj:Student) {

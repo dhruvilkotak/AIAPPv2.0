@@ -44,6 +44,12 @@ import { HttpModule } from '@angular/http';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import * as firebase from 'firebase';
+import { PostAssessmentDashBoard } from '../components/PostAssessment/postAssessmentDashBoard/postAssessmentDashBoard';
+import { StartNewPostAssessment } from '../components/PostAssessment/startNewPostAssessment/startNewPostAssessment';
+import { ViewPostAssessmentList } from '../components/PostAssessment/viewPostAssessmentList/viewPostAssessmentList';
+import { ViewPostAssessmentRecordList } from '../components/PostAssessment/viewPostAssessment/viewPostAssessmentRecordList';
+import { PostAssessmentFlashCard } from '../components/PostAssessment/postAssessmentFlashCard/postAssessmentFlashCard';
+import { ViewSubPostTestAssessmentRecord } from '../components/PostAssessment/viewSubPostTestAssessmentRecord/viewSubPostTestAssessmentRecord';
 
 
 const firebaseConfig = {
@@ -82,7 +88,13 @@ firebase.initializeApp(firebaseConfig);
     PreSessionAssessmentView,
     ViewDataSetList,
     ViewStudentAllWords,
-    ViewPreSessionUnKnownWord
+    ViewPreSessionUnKnownWord,
+    PostAssessmentDashBoard,
+    StartNewPostAssessment,
+    ViewPostAssessmentRecordList,
+    ViewPostAssessmentList,
+    PostAssessmentFlashCard,
+    ViewSubPostTestAssessmentRecord
   ],
   imports: [
     BrowserModule,
@@ -118,7 +130,13 @@ firebase.initializeApp(firebaseConfig);
     PreSessionAssessmentView,
     ViewDataSetList,
     ViewStudentAllWords,
-    ViewPreSessionUnKnownWord
+    ViewPreSessionUnKnownWord,
+    PostAssessmentDashBoard,
+    StartNewPostAssessment,
+    ViewPostAssessmentRecordList,
+    ViewPostAssessmentList,
+    PostAssessmentFlashCard,
+    ViewSubPostTestAssessmentRecord
   ],
   providers: [
     StatusBar,

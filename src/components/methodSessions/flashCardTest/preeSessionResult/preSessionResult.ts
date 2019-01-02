@@ -15,6 +15,7 @@ import { DIFlashCardSessionTest } from '../DIMethodSessionTest/DIFlashCardSessio
 import { TraditionalDrillPracticeService } from '../../../../services/TraditionalDrillPracticeService';
 import { AddWordList } from '../../../addWordList/addWordList';
 import { ViewPreSessionUnKnownWord } from './viewPreSessionUnknownWord/viewPreSessionUnKnownWord';
+import { KnownUnknownWordData } from '../../../../models/knownUnknownWordData';
 
 @Component({
     selector: 'page-preSessionResult',
@@ -90,9 +91,19 @@ export class PreSessionResult{
                                  }   
                                 else{
                                     if(this.studentObject.knownUnknownArrayList==null)
-                                         this.studentObject.knownUnknownArrayList=[];
-                                    this.wordServiceObj.removeWordFromArray(this.studentObject.knownUnknownArrayList,presetObj.wordData);
-                                    this.studentObject.knownUnknownArrayList.push(presetObj.wordData);
+                                        this.studentObject.knownUnknownArrayList=[];
+                                    if(this.studentObject.newKnownUnknownArrayList==null)
+                                        this.studentObject.newKnownUnknownArrayList=[];
+                                   // this.wordServiceObj.removeWordFromArray(this.studentObject.knownUnknownArrayList,presetObj.wordData);
+                                    this.wordServiceObj.removeKnownUnKnownWordFromArray(this.studentObject.newKnownUnknownArrayList,presetObj.wordData);
+                                    var knownUnknownWordDataObject : KnownUnknownWordData= new KnownUnknownWordData();
+                                    knownUnknownWordDataObject.wordData=presetObj.wordData;
+                                    knownUnknownWordDataObject.methodIndex=this.methodIndex;
+                                    knownUnknownWordDataObject.methodName=this.studentObject.methodArray[this.methodIndex].methodName;
+                                    knownUnknownWordDataObject.postAssessmentCounter=0;
+                                    this.studentObject.newKnownUnknownArrayList.push(knownUnknownWordDataObject);
+                                    
+                                    // this.studentObject.knownUnknownArrayList.push(presetObj.wordData);
                                   }
                                
                             }

@@ -1,0 +1,51 @@
+<ion-header>
+        <ion-navbar>
+          <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+          <ion-title>Post Test Assessment List</ion-title>
+        </ion-navbar>
+      </ion-header>
+      
+      <ion-content padding>
+            <ion-grid style="height: 10%">
+                    <ion-row justify-content-center align-items-center style="height: 100%">
+                            <h3> {{studentObject.firstName}}  {{studentObject.lastName}}  </h3>
+                    </ion-row>
+                  </ion-grid>
+       </ion-content>
+      
+    
+    
+       <ion-content padding="'true'" scroll="false" class="has-header">
+           <ion-card>
+               <!-- <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterItems()"></ion-searchbar> -->
+               <div *ngIf="error" class="error-message">{{error}}</div>
+               
+               <ion-item  >
+                   <ion-row class="ion-title" style="background-color: silver;">
+                       <ion-col >Post Assessment Test Index</ion-col>
+                       <ion-col >Test Status</ion-col>
+
+                     </ion-row>
+                     <ion-item *ngFor="let postTestWordDataObject of postTestWordDataRecordListArray; let i = index">
+                         <ion-row  >
+                             <ion-col style="color: blue" (click)="viewPostTestAssessment(i)" >Post Test {{i+1}}</ion-col>
+                             <ion-col *ngIf="postTestWordDataObject.subTestCompleted < postTestWordDataObject.maxTest">
+                                <ion-col>
+                                  False
+                                </ion-col>
+                             </ion-col>
+                             
+                             <ion-col *ngIf="postTestWordDataObject.subTestCompleted == postTestWordDataObject.maxTest">
+                                <ion-col>
+                                  True
+                                </ion-col>
+                             </ion-col>                             
+                         </ion-row>
+                       </ion-item>
+               </ion-item>
+             
+           </ion-card>
+         </ion-content>
+       

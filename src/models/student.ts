@@ -3,6 +3,8 @@ import { WordData } from './wordData';
 import { AssessmentTestData } from './AssessmentTestData';
 import { Method } from './methodIntervetion';
 import { ViewAssessmentWordObjects } from './viewAssessmentWordObjects';
+import { PostTestWordDataRecordList } from './postTestWordDataRecordList';
+import { KnownUnknownWordData } from './knownUnknownWordData';
 export class Student {
     firstName: string;
     studentUID:string;
@@ -17,5 +19,6 @@ export class Student {
     assessmentWordDataArray:Array<ViewAssessmentWordObjects>=[];//begining assessment objects
     convertToAssessmentWord:boolean=false;
     PreInterventionAssessmentResults:boolean=false;
-    
+    postTestWordDataRecordListArray:Array<PostTestWordDataRecordList> =[];
+    newKnownUnknownArrayList:Array<KnownUnknownWordData>=[];
  }

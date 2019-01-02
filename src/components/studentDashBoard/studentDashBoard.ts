@@ -10,6 +10,11 @@ import { Storage } from '@ionic/storage';
 import { File } from '@ionic-native/file';
 import { StudentServices } from '../../services/studentAddRemoveServices';
 import { ViewStudentAllWords } from './ViewStudentAllWords/viewStudentAllWords';
+import { WordServices } from '../../services/wordServices';
+import * as firebase from 'firebase';
+import { KnownUnknownWordData } from '../../models/knownUnknownWordData';
+import { StudentFireBaseService } from '../../firebaseServices/studentFireBaseService';
+import { PostAssessmentDashBoard } from '../PostAssessment/postAssessmentDashBoard/postAssessmentDashBoard';
 
 @Component({
   selector: 'page-StudentdashBoaord',
@@ -25,6 +30,7 @@ export class StudentdashBoard {
     private newLearnedWordLength:number=0;
     private unKnownWordLength:number=0;
     studentServiceObject:StudentServices=new StudentServices();
+    studentFireBaseService:StudentFireBaseService=new StudentFireBaseService();
     private ratio1=0;
     private ratio2=0;
     private error="";
@@ -44,8 +50,30 @@ export class StudentdashBoard {
         if(this.studentObject.unKnownArrayList!=null)
         this.unKnownWordLength=this.studentObject.unKnownArrayList.length;
         
-        if(this.studentObject.knownUnknownArrayList!=null)
-        this.newLearnedWordLength=this.studentObject.knownUnknownArrayList.length;
+        console.log("studDash:"+(this.studentObject.newKnownUnknownArrayList==null)); 
+       
+
+        if(this.studentObject.newKnownUnknownArrayList==null)
+          this.studentObject.newKnownUnknownArrayList=[];
+      
+        
+        if(this.studentObject.knownUnknownArrayList!=null && this.studentObject.knownUnknownArrayList.length>0)
+        {
+          for(let obj of this.studentObject.knownUnknownArrayList)
+          {
+            var knownUnknownWordDataObject : KnownUnknownWordData= new KnownUnknownWordData();
+            knownUnknownWordDataObject.wordData=obj;
+            knownUnknownWordDataObject.methodIndex=-1;
+            knownUnknownWordDataObject.methodName="Not Available";
+            knownUnknownWordDataObject.postAssessmentCounter=0;
+            this.studentObject.newKnownUnknownArrayList.push(knownUnknownWordDataObject);
+          }
+          this.studentObject.knownUnknownArrayList=null;
+          //this.studentFireBaseService.updateKnownUnknwonList(this.studentObject);
+          this.studentFireBaseService.updateNewKnownUnknwonList(this.studentObject);
+          
+        }
+          this.newLearnedWordLength=this.studentObject.newKnownUnknownArrayList.length;
         
         for(let assessmentTestobj of this.studentObject.assessmentDataArrayObject){
           if(!assessmentTestobj.testStatus)
@@ -54,6 +82,18 @@ export class StudentdashBoard {
         this.methodObjectArray=this.studentObject.methodArray;
         //this.beginAssessmentDone=this.studentObject.beginningAssessment[0] ;
         console.log("studDash:"+this.studentObject.studentId+" test:"+this.beginAssessmentDone); 
+       
+        // console.log("known:"+this.knownWordLength+" test:"+JSON.stringify({ wordDetailsArray: this.studentObject.unKnownArrayList })); 
+        // const databaseRef = firebase.database().ref('StudentDataList/'+this.studentObject.studentUID+'/unKnownArrayList/');
+        // databaseRef.once('value').then(function(snapshot) {
+        //         snapshot.forEach(function(childSnapshot) {
+        //           console.log("snapshot:"+snapshot.key+"  val:"+snapshot.val);
+        //           console.log("childspot:"+childSnapshot.key+"  val:"+childSnapshot.val);
+        //         //remove each child
+        //        // databaseRef.child(childSnapshot.key).remove();
+        //     });
+        // });
+
       });
       
     }
@@ -70,9 +110,30 @@ export class StudentdashBoard {
         if(this.studentObject.unKnownArrayList!=null)
         this.unKnownWordLength=this.studentObject.unKnownArrayList.length;
         
-        if(this.studentObject.knownUnknownArrayList!=null)
-        this.newLearnedWordLength=this.studentObject.knownUnknownArrayList.length;
-    
+        if(this.studentObject.newKnownUnknownArrayList==null)
+          this.studentObject.newKnownUnknownArrayList=[];
+      
+
+        if(this.studentObject.knownUnknownArrayList!=null && this.studentObject.knownUnknownArrayList.length>0)
+        {
+          for(let obj of this.studentObject.knownUnknownArrayList)
+          {
+            var knownUnknownWordDataObject : KnownUnknownWordData= new KnownUnknownWordData();
+            knownUnknownWordDataObject.wordData=obj;
+            knownUnknownWordDataObject.methodIndex=-1;
+            knownUnknownWordDataObject.methodName="Not Available";
+            knownUnknownWordDataObject.postAssessmentCounter=0;
+            this.studentObject.newKnownUnknownArrayList.push(knownUnknownWordDataObject);
+          }
+          this.studentObject.knownUnknownArrayList=null;
+        //  this.studentFireBaseService.updateKnownUnknwonList(this.studentObject);
+          this.studentFireBaseService.updateNewKnownUnknwonList(this.studentObject);
+      
+        }
+        
+        this.newLearnedWordLength=this.studentObject.newKnownUnknownArrayList.length;
+       
+
         this.beginAssessmentDone=true;
         for(let assessmentTestobj of this.studentObject.assessmentDataArrayObject){
           console.log("status:"+assessmentTestobj.testStatus);
@@ -116,6 +177,11 @@ export class StudentdashBoard {
     
   //  //  this.navCtrl.getPrevious().data.studentObject =this.studentObject;  
   // }
+
+  doPostAssessment(){
+    this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
+    this.navCtrl.push(PostAssessmentDashBoard);
+  }
 
   viewStudentWords()
   {

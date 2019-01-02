@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Post Assessment</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+   
+    <ion-content has-header="true" padding="true"  ng-controller="AppCtrl as ctrl" >
+     
+      <div class="ion-content" style=" padding-top: 25%">
+        <div *ngIf="error" class="error-message">{{error}}</div>
+           
+         <div class="row row-center">
+              <div class="col col-center">
+                <button ion-button (click)="startNewPostAssessment()" block> Start New Post Assessment </button>
+              </div>
+            </div>
+            
+            <div class="row row-center">
+              <div class="col col-center">
+                <button ion-button (click)="viewPostAssessmentList()" block>View Post Assessment List</button>
+              </div>
+            </div>
+            
+      </div>
+      </ion-content>
+  </ion-content>
+  

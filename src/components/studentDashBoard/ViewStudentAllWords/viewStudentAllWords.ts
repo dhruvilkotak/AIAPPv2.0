@@ -7,16 +7,17 @@ import { Storage } from '@ionic/storage';
 import { AddWordList } from '../../addWordList/addWordList';
 import { WordServices } from '../../../services/wordServices';
 import { StudentServices } from '../../../services/studentAddRemoveServices';
+import { KnownUnknownWordData } from '../../../models/knownUnknownWordData';
 
 @Component({
     selector: 'page-viewStudentAllWords',
     templateUrl: 'viewStudentAllWords.html'
 })
 export class ViewStudentAllWords{
-    newLearnedWords:Array<WordData> = [];
+    newLearnedWords:Array<KnownUnknownWordData> = [];
     unKnownWords:Array<WordData> = [];
     knwonWords:Array<WordData> = [];
-    allData_newLearnedWords:Array<WordData> = [];
+    allData_newLearnedWords:Array<KnownUnknownWordData> = [];
     allData_unKnownWords:Array<WordData> = [];
     allData_knwonWords:Array<WordData> = [];
     private studentObject:Student=new Student();
@@ -30,8 +31,9 @@ export class ViewStudentAllWords{
           var fileData:any = JSON.parse(val);
           this.studentObject = fileData.studentObject;
           
-          this.newLearnedWords=this.studentObject.knownUnknownArrayList;
-          this.allData_newLearnedWords=this.studentObject.knownUnknownArrayList;
+          
+          this.newLearnedWords=this.studentObject.newKnownUnknownArrayList;
+          this.allData_newLearnedWords=this.studentObject.newKnownUnknownArrayList;
 
           this.unKnownWords=this.studentObject.unKnownArrayList;
           this.allData_unKnownWords=this.studentObject.unKnownArrayList;
@@ -44,9 +46,9 @@ export class ViewStudentAllWords{
 
     filterItems(){
  
-        this.newLearnedWords = this.allData_newLearnedWords.filter((wordObject) => {
-            return wordObject.wordText.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1 || 
-            wordObject.wordCategory.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+        this.newLearnedWords = this.allData_newLearnedWords.filter((newKnownUnknownObject) => {
+            return newKnownUnknownObject.wordData.wordText.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1 || 
+            newKnownUnknownObject.wordData.wordCategory.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
           });
           
         this.unKnownWords = this.allData_unKnownWords.filter((wordObject) => {
@@ -62,12 +64,12 @@ export class ViewStudentAllWords{
     }
 
     addUnknownWordToStudent(){
-        let profileModal = this.modalCtrl.create(AddWordList, { fromModal: true });
-       profileModal.onDidDismiss(wordData => {
-         console.log("text:"+wordData.wordText);
-         this.addWordToStudentToFile(wordData,this.studentObject);
-       });
-       profileModal.present();
+    //     let profileModal = this.modalCtrl.create(AddWordList, { fromModal: true });
+    //    profileModal.onDidDismiss(wordData => {
+    //      console.log("text:"+wordData.wordText);
+    //      this.addWordToStudentToFile(wordData,this.studentObject);
+    //    });
+    //    profileModal.present();
     }
 
     addWordToStudentToFile(wordDataObj:WordData, studentObject:Student){

@@ -1,0 +1,60 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Start Post Assessment Test</ion-title>
+    </ion-navbar>
+    </ion-header>
+    
+    <ion-content padding>
+    <ion-grid style="height: 10%">
+      <ion-row justify-content-center align-items-center style="height: 100%">
+        <h3 > {{studentObject.firstName}}  {{studentObject.lastName}}  </h3>
+      </ion-row>
+    </ion-grid>
+    
+    
+    <div *ngIf="error" class="error-message">{{error}}</div>
+    <ion-content padding="'true'" scroll="false" class="has-header">
+        <ion-card>
+                <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterItems()"></ion-searchbar>
+                    <ion-grid style="height: 100%">
+                        <ion-row justify-content-center align-items-center style="height: 100%">
+                                <button ion-button class="submit-btn" full type="submit" (click)="startNewPostAssessmentTest()" >Start Post Assessment Test </button>
+                        </ion-row>
+                    </ion-grid>
+
+                <ion-item  >
+                    <ion-row class="ion-title" style="background-color: silver;" justify-content-center align-items-center>
+                        <ion-col >Word Text</ion-col>
+                        <ion-col >Word Category</ion-col>
+                        <ion-col >Post Test Completed</ion-col>
+                        <ion-col style="background-color: white;">
+                        <ion-item justify-content-center align-items-center>
+                            <ion-checkbox  checked="true"  [(ngModel)]="selectAll"  (ionChange)="updateSelectAll()"></ion-checkbox>
+                            
+                        </ion-item>
+                            
+                        </ion-col>
+                    </ion-row>
+                    <form [formGroup]="myGroup" (ngSubmit)="startNewPostAssessmentTest()">
+                        <ion-item formArrayName="wordObjectsList" *ngFor="let wordObjects of newLearnedWords; let i = index">
+                            <ion-row  justify-content-center align-items-center>
+                                <ion-col >{{wordObjects.wordData.wordText}}</ion-col>
+                                <ion-col >{{wordObjects.wordData.wordCategory}}</ion-col>
+                                <ion-col >{{wordObjects.postAssessmentCounter}}</ion-col>
+                                <ion-col justify-content-center align-items-center>
+                                        <ion-item>
+                                                <ion-checkbox  checked="true"   [formControlName]="i" ></ion-checkbox>
+                                        </ion-item>
+                                </ion-col>
+                            </ion-row>
+                        </ion-item>
+                    </form>
+                </ion-item>
+            
+        </ion-card>
+      </ion-content>
+    </ion-content>
+    

@@ -1,0 +1,78 @@
+<ion-header>
+        <ion-navbar>
+          <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+          <ion-title>Post Test Assessment </ion-title>
+        </ion-navbar>
+      </ion-header>
+      
+      <ion-content padding>
+            <ion-grid style="height: 20%">
+                    <ion-row justify-content-center align-items-center style="height: 100%">
+                            <h3> {{studentObject.firstName}}  {{studentObject.lastName}}  </h3>
+                    </ion-row>
+                  </ion-grid>
+       </ion-content>
+      
+    
+    
+       <ion-content padding="'true'" >
+           <ion-card>
+               <!-- <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterItems()"></ion-searchbar> -->
+               <div *ngIf="error" class="error-message">{{error}}</div>
+               
+               <ion-item  >
+                   <ion-row class="ion-title" style="background-color: silver;">
+                       <ion-col >Post Assessment Test</ion-col>
+                       <ion-col >Test Status</ion-col>
+                       <ion-col >Total Words</ion-col>
+                       <ion-col >Known Words</ion-col>
+                       <ion-col>Unknown Words</ion-col>
+                       <ion-col>Consistancy percentage</ion-col>
+                       
+                     </ion-row>
+                     <ion-item *ngFor="let i of numbers">
+                         <ion-row  >
+                             <ion-col style="color: blue" (click)="startAssessmentTest(i)" >Test {{i+1}}</ion-col>
+                                <ion-col *ngIf="i < subTestCompleted">
+                                  True
+                                </ion-col>
+                                <ion-col *ngIf="i < subTestCompleted">
+                                  {{postTestWordDataArray.length}}
+                                </ion-col>  
+                                <ion-col *ngIf="i < subTestCompleted">
+                                  {{postTestWordDataRecordListObject.knownCounterArray[i]}}
+                                </ion-col>
+                                <ion-col *ngIf="i < subTestCompleted">
+                                  {{postTestWordDataArray.length-postTestWordDataRecordListObject.knownCounterArray[i]}}
+                                </ion-col>
+                                <ion-col *ngIf="i < subTestCompleted">
+                                  {{postTestWordDataRecordListObject.consistancyPercentageArray[i]}}
+                                </ion-col>
+                             
+                             
+                             <ion-col *ngIf="i >= subTestCompleted">
+                                  False
+                                </ion-col>
+                                <ion-col  *ngIf="i >= subTestCompleted">
+                                  {{postTestWordDataArray.length}}
+                                </ion-col>  
+                                <ion-col *ngIf="i >= subTestCompleted">
+                                  0
+                                </ion-col>
+                                <ion-col *ngIf="i >= subTestCompleted">
+                                  0
+                                </ion-col>
+                                <ion-col *ngIf="i >= subTestCompleted">
+                                  {{postTestWordDataRecordListObject.consistancyPercentageArray[i]}}
+                                </ion-col>
+                             
+                             
+                         </ion-row>
+                       </ion-item>
+               </ion-item>
+             
+           </ion-card>
+         </ion-content>
+       

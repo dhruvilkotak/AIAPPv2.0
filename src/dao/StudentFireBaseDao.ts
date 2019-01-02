@@ -8,6 +8,8 @@ import { StudentServices } from "../services/studentAddRemoveServices";
 import { DocumentPicker } from "@ionic-native/document-picker";
 import { File } from "@ionic-native/file";
 import { Storage } from "@ionic/storage";
+import { WordData } from "../models/wordData";
+import { KnownUnknownWordData } from "../models/knownUnknownWordData";
 @Injectable()
 export class StudentFireBaseDao{
     
@@ -23,7 +25,7 @@ export class StudentFireBaseDao{
                     snapshot.forEach(function(childSnapshot) {
                         var key = childSnapshot.key;
                         var studentData:Student = childSnapshot.val();
-                        console.log(" student text:"+studentData.studentId);
+                        console.log(" student text:"+childSnapshot);
                         studentDetailsArray.push(studentData);
                    });
                    resolve(studentDetailsArray);
@@ -161,8 +163,6 @@ export class StudentFireBaseDao{
       
       updateKnownList(studentObject:Student)
       {
-        console.log("student known:"+studentObject.studentUID);
-          console.log("knownlen:"+studentObject.knownUnknownArrayList);
         let databaseRef = firebase.database().ref('StudentDataList/'+studentObject.studentUID+'/knwonArrayList/');
         databaseRef.update(studentObject.knwonArrayList);
       }
@@ -173,11 +173,58 @@ export class StudentFireBaseDao{
         databaseRef.update(studentObject.unKnownArrayList);
       }
 
+      updateKnownUnknwonList(studentObject:Student)
+      {
+        let databaseRef = firebase.database().ref('StudentDataList/'+studentObject.studentUID+'/knownUnknownArrayList/');
+        databaseRef.update(studentObject.knownUnknownArrayList);
+      }
+      updateNewKnownUnknwonList(studentObject:Student){
+        let databaseRef = firebase.database().ref('StudentDataList/'+studentObject.studentUID+'/newKnownUnknownArrayList/');
+        databaseRef.update(studentObject.newKnownUnknownArrayList);
+     
+    }
+
     addSessionToMethod(studentObject:Student,methodIndex:number)
     {
         var lastIndex=studentObject.methodArray[methodIndex].sessionsArray.length-1;
         let databaseRef = firebase.database().ref('StudentDataList/'+studentObject.studentUID+'/methodArray/'+methodIndex+'/sessionsArray/'+lastIndex+'/');
         databaseRef.update(studentObject.methodArray[methodIndex].sessionsArray[lastIndex]);
     }
+
+    removeWordsFromUnKnownArray(studentObject:Student , subWordArray:Array<WordData>){
+        for(let wordObj of subWordArray)
+        {
+            const databaseRef = firebase.database().ref('StudentDataList/'+studentObject.studentUID+'/unKnownArrayList/');
+            databaseRef.orderByChild('wordId').equalTo(""+wordObj.wordId)
+                .once('value').then(function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                    //remove each child
+                    databaseRef.child(childSnapshot.key).remove();
+                });
+            });
+        }
+
+    }
+
+    maintainUnKnownKnownArray(studentObject:Student )
+    {
+        var unKnownArray:Array<WordData> = studentObject.unKnownArrayList;
+        if(unKnownArray!=null)
+        {
+            const databaseRef = firebase.database().ref('StudentDataList/'+studentObject.studentUID+'/unKnownArrayList/');
+            databaseRef.set(studentObject.unKnownArrayList);
+        }
+
+        var knownUnKnownArray:Array<KnownUnknownWordData> = studentObject.newKnownUnknownArrayList;
+        if(knownUnKnownArray!=null)
+        {
+           this.updateNewKnownUnknwonList(studentObject);
+        }
+        
+    }
+
+    
+  
+
 
 }

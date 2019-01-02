@@ -160,7 +160,10 @@ export class DIFlashCardSessionTest{
       console.log("final length:"+this.studentObject.unKnownArrayList.length+"  session:"+this.methodSessionObject.unknownWordList.length);
         this.wordServiceObj.removeArrayFromArray(this.studentObject.unKnownArrayList, this.methodSessionObject.unknownWordList);
         var studentFireBaseService:StudentFireBaseService = new StudentFireBaseService();
-        studentFireBaseService.updateUnKnownList(this.studentObject);
+        studentFireBaseService.maintainUnKnownKnownArray(this.studentObject);
+        //  studentFireBaseService.removeWordsFromUnKnownArray(this.studentObject,this.methodSessionObject.unknownWordList);
+        //studentFireBaseService.updateUnKnownList(this.studentObject);
+
         console.log("final length:"+this.studentObject.unKnownArrayList.length+"  session:"+this.methodSessionObject.unknownWordList.length);
       this.studentObject.methodArray[this.methodIndex].sessionsArray.push(this.methodSessionObject);
     }

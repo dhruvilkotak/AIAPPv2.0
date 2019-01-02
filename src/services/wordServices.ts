@@ -4,6 +4,7 @@ import { WordData } from "../models/wordData";
 import { Platform } from "ionic-angular";
 import { SocialSharing } from "@ionic-native/social-sharing";
 import { DocumentPicker } from "@ionic-native/document-picker";
+import { KnownUnknownWordData } from "../models/knownUnknownWordData";
 
 export class WordServices{
   
@@ -169,6 +170,27 @@ export class WordServices{
         }
         return remove;
     }
+
+    removeKnownUnKnownWordFromArray(wordDetailsArray: Array<KnownUnknownWordData> , wordObj:WordData )
+    {
+        var remove:boolean=false;
+      
+        for(let obj of wordDetailsArray )
+        {
+            if(obj.wordData.wordId==wordObj.wordId)
+            {
+                const index: number = wordDetailsArray.indexOf(obj);
+                if (index !== -1) {
+                    console.log("index:"+index);
+                    wordDetailsArray.splice(index, 1);
+                    remove=true;
+                    return remove;
+                } 
+            }
+        }
+        return remove;
+    }
+
 
     removeArrayFromArray(wordArray: Array<WordData> , subWordArray:Array<WordData> )
     {

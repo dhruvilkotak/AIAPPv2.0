@@ -158,8 +158,10 @@ export class FlashCardIntervetion{
         //remove unknown if exist from student if possible
         console.log("final length:"+this.studentObject.unKnownArrayList.length+"  session:"+this.methodSessionObject.unknownWordList.length);
         this.wordServiceObj.removeArrayFromArray(this.studentObject.unKnownArrayList, this.methodSessionObject.unknownWordList);
-        //
-        this.studentFireBaseService.updateUnKnownList(this.studentObject);
+        var studentFireBaseService:StudentFireBaseService = new StudentFireBaseService();
+        studentFireBaseService.maintainUnKnownKnownArray(this.studentObject);
+        //studentFireBaseService.removeWordsFromUnKnownArray(this.studentObject,this.methodSessionObject.unknownWordList);
+        //this.studentFireBaseService.updateUnKnownList(this.studentObject);
         console.log("final length:"+this.studentObject.unKnownArrayList.length+"  session:"+this.methodSessionObject.unknownWordList.length);
         if(this.studentObject.methodArray[this.methodIndex].sessionsArray == null)
           this.studentObject.methodArray[this.methodIndex].sessionsArray = [];

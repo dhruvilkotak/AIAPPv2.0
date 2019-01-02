@@ -31,7 +31,7 @@
                 </ion-row>
                 
                 <ion-item *ngFor="let wordObjects of unKnownWords">
-                      <ion-row  >
+                      <ion-row *ngIf="wordObjects" >
                           <ion-col  >{{wordObjects.wordText}}</ion-col>
                           <ion-col  >{{wordObjects.wordCategory}}</ion-col>
                       
@@ -47,8 +47,8 @@
                 
                 <ion-item *ngFor="let wordObjects of newLearnedWords">
                       <ion-row  >
-                          <ion-col >{{wordObjects.wordText}}</ion-col>
-                          <ion-col >{{wordObjects.wordCategory}}</ion-col>
+                          <ion-col >{{wordObjects.wordData.wordText}}</ion-col>
+                          <ion-col >{{wordObjects.wordData.wordCategory}}</ion-col>
                          
                       </ion-row>
                     </ion-item>
