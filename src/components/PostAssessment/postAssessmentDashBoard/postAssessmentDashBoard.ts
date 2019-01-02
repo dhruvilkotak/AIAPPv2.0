@@ -14,7 +14,7 @@ import { ViewPostAssessmentList } from "../viewPostAssessmentList/viewPostAssess
 export class PostAssessmentDashBoard{
 
     private error:string="";
-    private studentObject:Student;
+    private studentObject:Student=new Student();
     private lastPostAssessment:number=-1; 
     constructor(public navCtrl: NavController,
       private storage:Storage,
