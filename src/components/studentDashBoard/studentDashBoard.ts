@@ -65,6 +65,7 @@ export class StudentdashBoard {
             knownUnknownWordDataObject.wordData=obj;
             knownUnknownWordDataObject.methodIndex=-1;
             knownUnknownWordDataObject.methodName="Not Available";
+            knownUnknownWordDataObject.wordId=obj.wordId;
             knownUnknownWordDataObject.postAssessmentCounter=0;
             this.studentObject.newKnownUnknownArrayList.push(knownUnknownWordDataObject);
           }
@@ -123,6 +124,7 @@ export class StudentdashBoard {
             knownUnknownWordDataObject.methodIndex=-1;
             knownUnknownWordDataObject.methodName="Not Available";
             knownUnknownWordDataObject.postAssessmentCounter=0;
+            knownUnknownWordDataObject.wordId=obj.wordId;
             this.studentObject.newKnownUnknownArrayList.push(knownUnknownWordDataObject);
           }
           this.studentObject.knownUnknownArrayList=null;

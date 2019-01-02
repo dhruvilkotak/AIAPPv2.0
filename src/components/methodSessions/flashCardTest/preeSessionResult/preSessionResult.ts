@@ -99,6 +99,7 @@ export class PreSessionResult{
                                     var knownUnknownWordDataObject : KnownUnknownWordData= new KnownUnknownWordData();
                                     knownUnknownWordDataObject.wordData=presetObj.wordData;
                                     knownUnknownWordDataObject.methodIndex=this.methodIndex;
+                                    knownUnknownWordDataObject.wordId=presetObj.wordData.wordId;
                                     knownUnknownWordDataObject.methodName=this.studentObject.methodArray[this.methodIndex].methodName;
                                     knownUnknownWordDataObject.postAssessmentCounter=0;
                                     this.studentObject.newKnownUnknownArrayList.push(knownUnknownWordDataObject);

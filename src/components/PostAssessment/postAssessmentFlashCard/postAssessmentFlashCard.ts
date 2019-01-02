@@ -158,12 +158,16 @@ export class PostAssessmentFlashCard{
     else
       this.studentObject.postTestWordDataRecordListArray.push(this.postTestWordDataRecordListObject);
     postTestAssessmentService.addPostTestWordDataRecordListObject(this.studentObject,this.testIndex);
+    if(this.subTestIndex == 2)
+    
+     postTestAssessmentService.updateKnownUnknownWordData( this.studentObject,this.wordDataArray);
+     
+     if(Student!=null)
+     {
+       //console.log("studentName:"+studentObject.firstName+" "+studentObject.lastName+" ass len:"+studentObject.assessmentDataArrayObject.length);
+       this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
+     } 
    
-    if(Student!=null)
-    {
-      console.log("studentName:"+this.studentObject.firstName+" "+this.studentObject.lastName+" ass len:"+this.studentObject.assessmentDataArrayObject.length);
-      this.storage.set('studentObject',JSON.stringify({ studentObject: this.studentObject }) );
-    } 
      this.navCtrl.pop();
   }
 

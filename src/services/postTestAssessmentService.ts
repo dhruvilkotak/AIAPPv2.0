@@ -3,6 +3,7 @@ import { KnownUnknownWordData } from "../models/knownUnknownWordData";
 import { PostTestWordData } from "../models/PostTestWordData";
 import { PostTestWordDataRecordList } from "../models/postTestWordDataRecordList";
 import { PostTestAssessmentDao } from "../dao/PostTestAssessmentDao";
+import { Storage } from "@ionic/storage";
 
 export class PostTestAssessmentService{
     
@@ -23,4 +24,28 @@ export class PostTestAssessmentService{
         postTestAssessmentDao.addPostTestWordDataRecordListObject(studentObject,testIndex);
     }
 
+    updateKnownUnknownWordData( studentObject:Student,wordDataArray:Array<PostTestWordData>){
+        console.log("update counter:");
+        for(let wordDataObj of wordDataArray)
+        {
+            this.incrementPostAssessmentCounter(studentObject,wordDataObj);
+            for(let studentWordObj of studentObject.newKnownUnknownArrayList)
+            {
+                if(wordDataObj.wordData.wordId == studentWordObj.wordData.wordId)
+                {
+                    studentWordObj.postAssessmentCounter++;
+                }
+            }
+        }
+
+       
+
+    }
+
+    incrementPostAssessmentCounter(studentObject:Student,wordDataObject:PostTestWordData){
+        console.log("Increment counter:");
+        var postTestAssessmentDao:PostTestAssessmentDao = new PostTestAssessmentDao();
+        postTestAssessmentDao.incrementPostAssessmentCounter(studentObject,wordDataObject);
+
+    }
 }

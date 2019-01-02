@@ -5,4 +5,5 @@ export class KnownUnknownWordData{
     postAssessmentCounter:number=0;
     methodIndex:number;
     methodName:string="";
+    wordId:String;
 }
