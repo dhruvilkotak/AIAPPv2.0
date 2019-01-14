@@ -50,6 +50,10 @@ import { ViewPostAssessmentList } from '../components/PostAssessment/viewPostAss
 import { ViewPostAssessmentRecordList } from '../components/PostAssessment/viewPostAssessment/viewPostAssessmentRecordList';
 import { PostAssessmentFlashCard } from '../components/PostAssessment/postAssessmentFlashCard/postAssessmentFlashCard';
 import { ViewSubPostTestAssessmentRecord } from '../components/PostAssessment/viewSubPostTestAssessmentRecord/viewSubPostTestAssessmentRecord';
+import { AddEmailList } from '../components/login/addEmail/addEmailList';
+import { AddUserDetails } from '../components/login/addUserDetails/addUserDetails';
+import { SecurityCheckUp } from '../components/login/forgetPassword/securityCheckUP/securityCheckUP';
+import { Signout } from '../components/login/signout/Signout';
 
 
 const firebaseConfig = {
@@ -94,7 +98,11 @@ firebase.initializeApp(firebaseConfig);
     ViewPostAssessmentRecordList,
     ViewPostAssessmentList,
     PostAssessmentFlashCard,
-    ViewSubPostTestAssessmentRecord
+    ViewSubPostTestAssessmentRecord,
+    AddEmailList,
+    AddUserDetails,
+    SecurityCheckUp,
+    Signout
   ],
   imports: [
     BrowserModule,
@@ -136,7 +144,11 @@ firebase.initializeApp(firebaseConfig);
     ViewPostAssessmentRecordList,
     ViewPostAssessmentList,
     PostAssessmentFlashCard,
-    ViewSubPostTestAssessmentRecord
+    ViewSubPostTestAssessmentRecord,
+    AddEmailList,
+    AddUserDetails,
+    SecurityCheckUp,
+    Signout
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,82 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Add User</ion-title>
+    </ion-navbar>
+    </ion-header>
+    
+    <ion-content padding>
+    <ion-grid style="height: 10%">
+      <ion-row justify-content-center align-items-center style="height: 100%">
+        <h3 > Add User details : </h3>
+      </ion-row>
+    </ion-grid>
+    
+    
+    <div *ngIf="error" class="error-message">{{error}}</div>
+    <ion-content padding="'true'" scroll="false" class="has-header">
+        <ion-card *ngIf="showForm">
+          <form class="list" #newStudentForm="ngForm" (ngSubmit)="addUserDetails()">
+              <ion-row>
+                  <ion-col>
+                    <ion-list inset>
+              
+                  <ion-item>
+                    <ion-label >First Name : </ion-label>
+                    <ion-input name="firstname" required [(ngModel)]="firstname" type="text"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                      <ion-label >Last Name : </ion-label>
+                      <ion-input  name="lastname" required [(ngModel)]="lastname" type="text"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label >Email Id : </ion-label>
+                        
+                        <ion-input  name="emailId" required [(ngModel)]="emailId"  type="email"></ion-input>
+
+                      </ion-item>
+                    
+                      <ion-item>
+                          <ion-label >Password : </ion-label>
+                      
+                        <ion-input name="password" id="password" type="password" required [(ngModel)]="password"></ion-input>
+                      </ion-item>
+
+                      <ion-item>
+                          <ion-label >Re-type Password : </ion-label>
+                      
+                        <ion-input name="reTypePassword" type="password" required [(ngModel)]="reTypePassword"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label >Security Question : </ion-label>
+                        <ion-input name="securityQuestion" required [(ngModel)]="securityQuestion" type="text"></ion-input>
+                      </ion-item>
+
+                      <ion-item>
+                        <ion-label >Answer : </ion-label>
+                    
+                      <ion-input name="answer" type="password" required [(ngModel)]="answer"></ion-input>
+                    </ion-item>
+
+                            <ion-grid style="height: 100%">
+                                <ion-row justify-content-center align-items-center style="height: 100%">
+                                        <button ion-button class="submit-btn" full type="submit" [disabled]="!newStudentForm.form.valid">Add User
+                                          </button>
+                                  </ion-row>
+                              </ion-grid>
+                  </ion-list>
+              </ion-col>
+              </ion-row>
+            </form>
+        </ion-card>
+        
+        <ion-card *ngIf="!showForm">
+          <ion-item>
+            <ion-label *ngIf="!emailVerfied"> Check your Email and verify it by clicking the link provided in Email. </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-content>
+    </ion-content>
+    

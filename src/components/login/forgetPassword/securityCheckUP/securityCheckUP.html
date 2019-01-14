@@ -1,0 +1,60 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>
+        Forget Password
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  <ion-content padding center text-center>
+      <ion-card>
+            <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+          
+        <form #loginForm="ngForm" (ngSubmit)="verifyEmail()" autocomplete="off">
+          <ion-row>
+            <ion-col>
+              <ion-list inset>
+                <ion-item>
+                  <ion-input placeholder="Email Id" name="emailId"  type="email" required [(ngModel)]="emailId" ></ion-input>
+                </ion-item>
+
+              </ion-list>
+
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              
+              <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">Verify Email
+              </button>              
+            </ion-col>
+          </ion-row>
+        </form>
+
+        <form *ngIf="emailVerified" #securityQuestion="ngForm" (ngSubmit)="verifySecurity()" autocomplete="off">
+                <ion-row>
+                  <ion-col>
+                    <ion-list inset>
+                      <ion-item>
+                          <ion-label>
+                              <!-- {{}} -->
+                          </ion-label>
+                        <ion-input placeholder="Email Id" name="emailId"  type="email" required [(ngModel)]="emailId" ></ion-input>
+                      </ion-item>
+      
+                    </ion-list>
+      
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    
+                    <button ion-button class="submit-btn" full type="submit" [disabled]="!securityQuestion.form.valid">Verify Email
+                    </button>              
+                  </ion-col>
+                </ion-row>
+              </form>
+      
+              
+
+    </ion-card>
+  </ion-content>

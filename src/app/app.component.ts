@@ -15,6 +15,10 @@ import { LineChart } from '../components/charts/lineCharts/lineCharts';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { WordDataFireBaseService } from '../firebaseServices/WordDataFireBaseService';
 import { File } from '@ionic-native/file';
+import { AddEmailList } from '../components/login/addEmail/addEmailList';
+import { AddUserDetails } from '../components/login/addUserDetails/addUserDetails';
+import { Storage } from '@ionic/storage';
+import { User } from '../models/user';
 
 
 @Component({
@@ -23,7 +27,7 @@ import { File } from '@ionic-native/file';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = Login;
 
   pages: Array<{title: string, component: any}>;
 
@@ -31,16 +35,40 @@ export class MyApp {
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen,
     private screenOrientation: ScreenOrientation,
-    private file:File) {
+    private file:File,
+    private storage:Storage) {
 
     this.initializeApp();
          
+    this.storage.get('userDetails').then((val) => {
+      var fileData:any = JSON.parse(val);
+      var userDetails:User = fileData.userDetails;
+      if(userDetails.userRole=="admin"){
+        this.pages = [
+          { title: 'Home', component: HomePage },
+          { title: 'Add Word List', component: AddWordList },
+          { title: 'View Word List', component: ViewWordList },
+          { title: 'Add User Email ', component: AddEmailList },
+          { title: 'signout ', component: Login },
+          ];
+      }
+      else{
+        this.pages = [
+          { title: 'Home', component: HomePage },
+          { title: 'Add Word List', component: AddWordList },
+          { title: 'View Word List', component: ViewWordList },
+          { title: 'signout ', component: Login },
+          ];
+      }
+    });
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
       { title: 'Add Word List', component: AddWordList },
-      { title: 'View Word List', component: ViewWordList }
+      { title: 'View Word List', component: ViewWordList },
+      { title: 'Add User Email ', component: AddEmailList },
+      { title: 'Login ', component: Login },
       ];
 
   }
